@@ -22,7 +22,7 @@ class CreateCondominosTable extends Migration
             $table->string('residente')->nullable();
             $table->string('figura')->nullable();
             $table->string('interior');
-
+            $table->boolean('desocupada')->default(false);
             $table->timestamps();
         });
     }
