@@ -45,10 +45,14 @@
             <td>{{ $condomino->residente }}</td>
             <td>{{ $condomino->figura }}</td>
             <td>{{ $condomino->saldo }}</td>
-            <td>{{ $condomino->desocupada ? 'Desocupadas' : '' }}</td>
+            <td>{{ $condomino->desocupada ? 'Desocupada' : '' }}</td>
             <td>
-            <a class="btn btn-link" href="{{ route('edit-condomino', ['id' => $condomino->id]) }}"><i class="fas fa-edit"></i></a>
-            <td>
+                <a class="btn btn-link" href="{{ route('edit-condomino', ['id' => $condomino->id]) }}"><i class="fas fa-edit"></i></a>
+                @if (isset($condomino->ultima_factura))
+                <a class="btn btn-link" href="{{ route('balance-condomino', 
+                    ['condominio_id'=> $condomino->id,
+                    'id' => $condomino->ultima_factura]) }}"><i class="fas fa-file-invoice-dollar"></i></a>
+                @endif
             </td>
             </tr>
         @endforeach

@@ -23,6 +23,7 @@ class CreateCondominosTable extends Migration
             $table->string('figura')->nullable();
             $table->string('interior');
             $table->boolean('desocupada')->default(false);
+            $table->unsignedBigInteger('ultima_factura')->nullable();
             $table->timestamps();
         });
     }
