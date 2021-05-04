@@ -9,8 +9,11 @@ class Condomino extends Model
 {
     use HasFactory;
 
-
     public function facturas() {
         return $this->oneToMany(Factura::class);
+    }
+
+    public function pagos() {
+        return $this->oneToMany(Pago::class);
     }
 }

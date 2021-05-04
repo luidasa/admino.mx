@@ -5,7 +5,7 @@
 @section('camino')
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{ route('condominos') }}">Condominos</a></li>
     <li class="breadcrumb-item active">{{ $condomino->interior }}</li>
   </ol>
@@ -60,7 +60,8 @@
             </div>
             <hr>
             <div class="form-group text-right">
-            <button class="btn btn-primary">Guardar</button>
+              <a href="{{ url('registrar-pago', ['condomino_id' => $condomino->id]) }}" class="btn btn-primary">Pagos</a>
+              <button class="btn btn-primary">Guardar</button>
             </div>
           </form>
 

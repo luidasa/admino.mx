@@ -10,7 +10,7 @@
 @section('camino')
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
     <li class="breadcrumb-item active">Condominos</li>
   </ol>
 </nav>
@@ -47,8 +47,13 @@
             <td>{{ $condomino->saldo }}</td>
             <td>{{ $condomino->desocupada ? 'Desocupada' : '' }}</td>
             <td>
-                <a class="btn btn-link" href="{{ route('edit-condomino', ['id' => $condomino->id]) }}"><i class="fas fa-edit"></i></a>
-                @if (isset($condomino->ultima_factura))
+                <a class="btn btn-link" href="{{ route('edit-condomino', ['id' => $condomino->id]) }}">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-link" href="{{ route('pagos', ['condomino_id'=> $condomino->id]) }}">
+                    <i class="fas fa-comment-dollar"></i>
+                </a>
+                @if ($condomino->ultima_factura !== null )
                 <a class="btn btn-link" href="{{ route('balance-condomino', 
                     ['condominio_id'=> $condomino->id,
                     'id' => $condomino->ultima_factura]) }}"><i class="fas fa-file-invoice-dollar"></i></a>

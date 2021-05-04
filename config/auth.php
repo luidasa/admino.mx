@@ -109,9 +109,10 @@ return [
     | Here you may define the amount of seconds before a password confirmation
     | times out and the user is prompted to re-enter their password via the
     | confirmation screen. By default, the timeout lasts for three hours.
+    | Se cambia a 20 minutos.
     |
     */
 
-    'password_timeout' => 10800,
+    'password_timeout' => 60*20,
 
 ];

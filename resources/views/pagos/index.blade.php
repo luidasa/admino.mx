@@ -5,12 +5,14 @@
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
 @endsection
 
-@section('titulo', 'Pagos no identificados')
+@section('titulo', 'Pagos')
 
 @section('camino')
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('condominos') }}">Condominos</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('edit-condomino', ['id' => $condomino->id ]) }}">{{ $condomino->interior }}</a></li>
     <li class="breadcrumb-item active">Pagos</li>
   </ol>
 </nav>
@@ -31,7 +33,7 @@
             </tr>
         </thead>
         <tbody>
-        @foreach ($pagos as $pago)
+        @foreach ($condomino->pagos as $pago)
             <tr>
             <th scope="row">
                 <a href="{{ route('show-pago', ['id' => $condomino->id]) }}">{{ $pago->id }}</a>

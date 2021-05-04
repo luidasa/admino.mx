@@ -5,9 +5,9 @@
 @section('camino')
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('condominios') }}">Condominos</a></li>
-    <li class="breadcrumb-item active">{{ $condomino->duenio }}</li>
+    <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('condominos') }}">Condominos</a></li>
+    <li class="breadcrumb-item active">{{ $condomino->interior }}</li>
   </ol>
 </nav>
 @endsection
