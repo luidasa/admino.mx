@@ -33,7 +33,7 @@
             </tr>
         </thead>
         <tbody>
-        @foreach ($condomino->pagos as $pago)
+        @foreach ($pagos as $pago)
             <tr>
             <th scope="row">
                 <a href="{{ route('show-pago', ['id' => $condomino->id]) }}">{{ $pago->id }}</a>

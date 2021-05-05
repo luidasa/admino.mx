@@ -14,13 +14,17 @@ class PagosController extends Controller
     public function getIndex($condomino_id) {
         $condomino = Condomino::find($condomino_id);
         if ($condomino !== null) {
-            return view('pagos.index', ['condomino' => $condomino]);
+            return view('pagos.index', [
+                'condomino' => $condomino,
+                'pagos' => $condomino->pagos()
+            ]);
         } else {
-            return redirect()->route('condominos')->with(['danger-alert' => 'El condominio no existe']);
+            return redirect()->route('condosminos')->with(['danger-alert' => 'El condominio no existe']);
         }
     }
 
-    public function getCreate() {
+    public function getCreate(Request $request, $condomino_id) {
+
         return view('pagos.form');
     }
 }
