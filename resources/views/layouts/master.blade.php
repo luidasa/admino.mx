@@ -25,8 +25,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      @auth
+      <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+        @auth
         <li class="nav-item {{ Route::currentRouteName() == 'panel' ? 'active': '' }}">
           <a class="nav-link " aria-current="page" href="{{route('panel')}}">Panel</a>
         </li>
@@ -50,29 +50,35 @@
             Documentos
           </a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ Auth::user()->name }}
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Perfil</a>
-            <a class="dropdown-item" href="#">Preferencias</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('logout') }}">Salir</a>
-          </div>
-        </li>
-
-        @else
-        <li class="nav-item">            
-          <a href="{{ route('login') }}" class="nav-link">Iniciar</a>
-        </li>
-
-          @if (Route::has('register'))
-            <li class="nav-item">
-              <a href="{{ route('register') }}" class="nav-link">Registro</a>
-            </li>
-          @endif
         @endauth
+        </ul>
+      </div>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav justify-content-end">
+          @auth
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ Auth::user()->name }}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Perfil</a>
+                <a class="dropdown-item" href="#">Preferencias</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('logout') }}">Salir</a>
+              </div>
+            </li>
+          @else
+            <li class="nav-item">            
+              <a href="{{ route('login') }}" class="nav-link">Iniciar</a>
+            </li>
+
+            @if (Route::has('register'))
+              <li class="nav-item">
+                <a href="{{ route('register') }}" class="nav-link">Registro</a>
+              </li>
+            @endif
+          @endauth
+  
         </ul>
     </div>
   </div>

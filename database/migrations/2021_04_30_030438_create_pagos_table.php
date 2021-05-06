@@ -20,6 +20,8 @@ class CreatePagosTable extends Migration
             $table->foreignId('condomino_id')->constrained('condominos');
             $table->decimal('importe', $precision = 8, $scale = 2);
             $table->string('forma');
+            $table->string('referencia')->nullable();
+            $table->string('archivo')->nullable();
             $table->datetime('pagado_el');
 
             $table->timestamps();

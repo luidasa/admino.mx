@@ -18,37 +18,48 @@
 </nav>
 @endsection
 
+@section('feedback')
+  @parent
+@endsection
+
 @section('contenido')
 <div class="card">
-        <div class="card-header">Pagos registrados</div>
-        <div class="card-body">
-        <table id="pagos" class="table table-responsive">
-        <thead>
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Fecha registrado</th>
-            <th scope="col">Importe</th>
-            <th scope="col">Casa</th>
-            <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach ($pagos as $pago)
-            <tr>
-            <th scope="row">
-                <a href="{{ route('show-pago', ['id' => $condomino->id]) }}">{{ $pago->id }}</a>
-            </th>
-            <td>{{ $pago->fecha_registro }}</td>
-            <td>{{ $pago->monto }}</td>
-            <td>{{ $pago->casa }}</td>
-            <td>
-                <a class="btn btn-link" href="{{ route('confirm-pago', ['id' => $pago->id]) }}"><i class="fas fa-edit"></i></a>
-            </td>
-            </tr>
-        @endforeach
-        </tbody>
+    <div class="card-header">Pagos registrados</div>
+    <div class="card-body">
+        <table id="pagos" class="table">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fecha registrado</th>
+                <th scope="col">Importe</th>
+                <th scope="col">Forma</th>
+                <th scope="col">Referencia</th>
+                <th scope="col">Corregir</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach ($condomino->pagos as $pago)
+                <tr>
+                <th scope="row">
+                    <a href="{{ route('show-pago', ['id' => $condomino->id]) }}">{{ $pago->id }}</a>
+                </th>
+                <td>{{ $pago->pagado_el }}</td>
+                <td>{{ $pago->importe }}</td>
+                <td>{{ $pago->forma }}</td>
+                <td>{{ $pago->referencia }}</td>
+                <td>
+                @if ($condomino->factura_id === null )
+                    <a href="{{ route('edit-pago', ['id' => $condomino->id]) }}"><i class="fas fa-edit"></i></a>
+                @endif
+                </td>
+                </tr>
+            @endforeach
+            </tbody>
         </table>    
-        </div>
+    </div>
+    <div class="card-footer text-rigth">
+    <a href="{{ route('create-pago', ['condomino_id' => $condomino->id] ) }}" class="btn btn-primary">Registrar</a>
+    </div>
 </div>
 @endsection
 

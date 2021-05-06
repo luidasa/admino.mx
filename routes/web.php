@@ -26,8 +26,11 @@ Route::post('/condominos/edit/{id}', [CondominoController::class, 'postEdit']);
 Route::get('/facturas/{condomino_id}', [FacturasController::class, 'getIndex'])->name('facturas');
 Route::get('/facturas/{condomino_id}/{id}', [FacturasController::class, 'getShow'])->name('balance-condomino');
 
-Route::post('/condominos/{condomino_id}/pagar', [PagosController::class, 'getCreate'])->name('create-pago');
 Route::get('/condominos/{condomino_id}/pagos', [PagosController::class, 'getIndex'])->name('pagos');
+Route::get('/condominos/{condomino_id}/pagar', [PagosController::class, 'getCreate'])->name('create-pago');
+Route::post('/condominos/{condomino_id}/pagar', [PagosController::class, 'postCreate']);
+Route::get('/pago/{id}', [PagosController::class, 'showPago'])->name('show-pago');
+Route::get('/pago/edit/{id}', [PagosController::class, 'getEdit'])->name('edit-pago');
 
 Route::get('/quejas', [QuejasController::class, 'getIndex'])->name('quejas');
 
