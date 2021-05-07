@@ -13,7 +13,7 @@ class CondominoController extends Controller
     
     //
     public function getIndex() {
-        $condominos = Condomino::all();
+        $condominos = Condomino::paginate(10);
         return view('condominos.index', ["condominos" => $condominos]);
     }
 

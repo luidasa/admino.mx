@@ -19,8 +19,8 @@
 @section('contenido')
 <div class="card">
         <div class="card-header">Condominios registrados</div>
-        <div class="card-body">
-        <table id="condominos" class="table table-responsive">
+        <div class="card-body table-responsive">
+        <table id="condominos" class="table table-striped">
         <thead>
             <tr>
             <th scope="col">#</th>
@@ -62,6 +62,9 @@
             </tr>
         @endforeach
         </tbody>
+        <tfoot>
+        <tr><td colspan="9">{{ $condominos->links() }}</td></tr>
+        </tfoot>
         </table>    
         </div>
 </div>
@@ -69,7 +72,4 @@
 
 @section('scripts')
     @parent
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="/assets/js/condomino-index.js"></script>
 @endsection

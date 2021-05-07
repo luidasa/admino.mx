@@ -24,6 +24,9 @@ class CreatePagosTable extends Migration
             $table->string('archivo')->nullable();
             $table->datetime('pagado_el');
 
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->constrained('users');
+
             $table->timestamps();
         });
     }

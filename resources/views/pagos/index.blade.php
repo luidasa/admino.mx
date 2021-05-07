@@ -25,8 +25,8 @@
 @section('contenido')
 <div class="card">
     <div class="card-header">Pagos registrados</div>
-    <div class="card-body">
-        <table id="pagos" class="table">
+    <div class="card-body table-responsive">
+        <table id="pagos" class="table table-striped">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -38,12 +38,12 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach ($condomino->pagos as $pago)
+            @foreach ($pagos as $pago)
                 <tr>
                 <th scope="row">
                     <a href="{{ route('show-pago', ['id' => $condomino->id]) }}">{{ $pago->id }}</a>
                 </th>
-                <td>{{ $pago->pagado_el }}</td>
+                <td>{{ date('d/m/Y', strtotime($pago->pagado_el)) }}</td>
                 <td>{{ $pago->importe }}</td>
                 <td>{{ $pago->forma }}</td>
                 <td>{{ $pago->referencia }}</td>
@@ -55,6 +55,11 @@
                 </tr>
             @endforeach
             </tbody>
+            <tfoot>
+                <th><td colspan="6" class="text-right">
+                {{ $pagos->links() }}
+                </td></th>
+            </tfoot>
         </table>    
     </div>
     <div class="card-footer text-rigth">
@@ -65,7 +70,4 @@
 
 @section('scripts')
     @parent
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="/assets/js/condomino-index.js"></script>
 @endsection

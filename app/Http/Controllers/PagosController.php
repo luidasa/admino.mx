@@ -14,14 +14,15 @@ class PagosController extends Controller
     }
 
     public function getIndex($condomino_id) {
-        $condomino = Condomino::find($condomino_id);
+        $condomino  = Condomino::find($condomino_id);
+        $pagos      = $condomino->pagos()->paginate(5);
         if ($condomino !== null) {
             return view('pagos.index', [
                 'condomino' => $condomino,
-                'pagos' => $condomino->pagos()
+                'pagos'     => $pagos
             ]);
         } else {
-            return redirect()->route('condosminos')->with(['danger-alert' => 'El condominio no existe']);
+            return redirect()->route('condominos')->with(['danger-alert' => 'El condominio no existe']);
         }
     }
 
@@ -41,9 +42,10 @@ class PagosController extends Controller
         $condomino = Condomino::find($condomino_id);
 
         $validateData = $this->validate($request, [
-            'pagado_el'     => 'required|date|after:created_at|before:start_date',
-            'importe'       => 'required|number|gt:0',
+            'pagado_el'     => 'required|date',
+            'importe'       => 'required|numeric|gt:0',
             'referencia'    => 'required|min:20|max:300',
+            'forma'         => 'required|string',
             'comprobante'   => 'mimes:jpg,bmp,png,pdf'
         ]);
         if ($condomino !== null) {
@@ -52,13 +54,17 @@ class PagosController extends Controller
             $pago->importe = $request->input('importe');
             $pago->forma = $request->input('forma');
             $pago->referencia = $request->input('referencia');
+            $pago->created_by = \Auth::user()->id; 
+            $pago->updated_by = \Auth::user()->id; 
 
-            if ($request->hasFile('comprobante')) {
-                $path = $request->file('comprobante')->store('comprobantes');
-            }
-
+            if ($request->file('comprobante')) {
+                $pago->archivo = $request->file('comprobante')->store('comprobantes');
+            } 
+            
             $condomino->pagos()->save($pago);
-            return redirect()->route('pagos', ['condomino_id' => $condomino_id])
+            error_log('Grabamos el pago.');
+            return redirect()
+                ->route('pagos', ['condomino_id' => $condomino_id])
                 ->with(['alert-success' => 'Pago registrado, se vera reflejado en su siguiente estado de cuenta.']);
         } else {
             return redirect()->route('condominos')->with(['alert-danger' => 'El condominio no existe']);
