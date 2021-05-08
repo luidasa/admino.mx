@@ -86,10 +86,11 @@
 
 <div class="container mt-3">
 
-@section('camino')
+@section('encabezado')
 @show
 
-<h1>@yield('titulo')</h1>
+@section('camino')
+@show
 
 @section('feedback')
   @if (session('alert-primary') !== null)

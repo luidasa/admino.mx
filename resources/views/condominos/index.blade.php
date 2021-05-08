@@ -7,6 +7,12 @@
 
 @section('titulo', 'Condominos registrados')
 
+@section('encabezado')
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Condominios registrados</h1>
+</div>
+@endsection
+
 @section('camino')
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
