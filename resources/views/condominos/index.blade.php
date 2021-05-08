@@ -53,6 +53,9 @@
                 <a class="btn btn-link" href="{{ route('pagos', ['condomino_id'=> $condomino->id]) }}">
                     <i class="fas fa-comment-dollar"></i>
                 </a>
+                <a class="btn btn-link" href="{{ route('cargos', ['condomino_id'=> $condomino->id]) }}">
+                    <i class="fas fa-receipt"></i>
+                </a>
                 @if ($condomino->ultima_factura !== null )
                 <a class="btn btn-link" href="{{ route('balance-condomino', 
                     ['condominio_id'=> $condomino->id,

@@ -16,4 +16,8 @@ class Condomino extends Model
     public function pagos() {
         return $this->hasMany(Pago::class);
     }
+
+    public function cargos() {
+        return $this->hasMany(Cargo::class);
+    }
 }

@@ -60,6 +60,7 @@
             </div>
             <hr>
             <div class="form-group text-right">
+              <a href="{{ route('cargos', ['condomino_id' => $condomino->id]) }}" class="btn btn-primary">Cargos</a>
               <a href="{{ route('pagos', ['condomino_id' => $condomino->id]) }}" class="btn btn-primary">Pagos</a>
               <button class="btn btn-primary">Guardar</button>
             </div>

@@ -39,6 +39,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/comprobantes'),
         ],
+        'evidencias' => [
+            'driver' => 'local',
+            'root' => storage_path('app/evidencias'),
+        ],
 
         'public' => [
             'driver' => 'local',

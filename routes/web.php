@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CondominoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PagosController;
+use App\Http\Controllers\CargoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,12 +26,22 @@ Route::get('/condominos/edit/{id}', [CondominoController::class, 'getEdit'])->na
 Route::post('/condominos/edit/{id}', [CondominoController::class, 'postEdit']);
 Route::get('/facturas/{condomino_id}', [FacturasController::class, 'getIndex'])->name('facturas');
 Route::get('/facturas/{condomino_id}/{id}', [FacturasController::class, 'getShow'])->name('balance-condomino');
+Route::get('/facturas/generar', [FacturasController::class, 'getCreate'])->name('create-facturas');
+Route::post('/facturas/generar', [FacturasController::class, 'postCreate']);
 
 Route::get('/condominos/{condomino_id}/pagos', [PagosController::class, 'getIndex'])->name('pagos');
 Route::get('/condominos/{condomino_id}/pagar', [PagosController::class, 'getCreate'])->name('create-pago');
 Route::post('/condominos/{condomino_id}/pagar', [PagosController::class, 'postCreate']);
-Route::get('/pago/{id}', [PagosController::class, 'showPago'])->name('show-pago');
+Route::get('/pago/{id}', [PagosController::class, 'getComprobante'])->name('show-pago');
 Route::get('/pago/edit/{id}', [PagosController::class, 'getEdit'])->name('edit-pago');
+Route::post('/pago/edit/{id}', [PagosController::class, 'postEdit']);
+
+Route::get('/condominos/{condomino_id}/cargos', [CargoController::class, 'getIndex'])->name('cargos');
+Route::get('/condominos/{condomino_id}/cargo', [CargoController::class, 'getCreate'])->name('create-cargo');
+Route::post('/condominos/{condomino_id}/cargo', [CargoController::class, 'postCreate']);
+Route::get('/cargo/{id}', [CargoController::class, 'getComprobante'])->name('show-cargo');
+Route::get('/cargo/edit/{id}', [CargoController::class, 'getEdit'])->name('edit-cargo');
+Route::post('/cargo/edit/{id}', [CargoController::class, 'postEdit']);
 
 Route::get('/quejas', [QuejasController::class, 'getIndex'])->name('quejas');
 

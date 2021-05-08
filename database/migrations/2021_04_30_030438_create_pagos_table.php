@@ -21,6 +21,7 @@ class CreatePagosTable extends Migration
             $table->decimal('importe', $precision = 8, $scale = 2);
             $table->string('forma');
             $table->string('referencia')->nullable();
+            $table->string('nombre_original')->nullable();
             $table->string('archivo')->nullable();
             $table->datetime('pagado_el');
 
