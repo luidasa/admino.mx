@@ -43,7 +43,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/evidencias'),
         ],
-
+        'minutas' => [
+            'driver' => 'local',
+            'root' => storage_path('app/minutas'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

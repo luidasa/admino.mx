@@ -5,6 +5,7 @@ use App\Http\Controllers\CondominoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\CargoGeneralController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,8 @@ Route::get('/condominos', [CondominoController::class, 'getIndex'])->name('condo
 Route::get('/condominos/{id}', [CondominoController::class, 'getShow'])->name('show-condomino');
 Route::get('/condominos/edit/{id}', [CondominoController::class, 'getEdit'])->name('edit-condomino');
 Route::post('/condominos/edit/{id}', [CondominoController::class, 'postEdit']);
+
+Route::get('/facturas', [FacturasController::class, 'getIndex'])->name('last-facturas');
 Route::get('/facturas/{condomino_id}', [FacturasController::class, 'getIndex'])->name('facturas');
 Route::get('/facturas/{condomino_id}/{id}', [FacturasController::class, 'getShow'])->name('balance-condomino');
 Route::get('/facturas/generar', [FacturasController::class, 'getCreate'])->name('create-facturas');
@@ -47,5 +50,17 @@ Route::get('/quejas', [QuejasController::class, 'getIndex'])->name('quejas');
 
 Route::get('/documentos', [DocumentosController::class, 'getIndex'])->name('documentos');
 Route::get('/proyectos', [ProyectosController::class, 'getIndex'])->name('proyectos');
+
+Route::get('/cargosgenerales', [CargoGeneralController::class, 'getIndex'])->name('cargos-generales');
+Route::get('/cargosgenerales/create', [CargoGeneralController::class, 'getCreate'])->name('create-cargo-general');
+Route::post('/cargosgenerales/create', [CargoGeneralController::class, 'postCreate']);
+
+Route::get('/cargosgenerales/schedule/{id}', [CargoGeneralController::class, 'createCalendario'])->name('schedule-cargo-general');
+Route::get('/cargosgenerales/unschedule/{id}', [CargoGeneralController::class, 'deleteCalendario'])->name('unschedule-cargo-general');
+
+Route::get('/cargosgenerales/{id}', [CargoGeneralController::class, 'getShow'])->name('show-cargo-general');
+Route::get('/cargosgenerales/drop/{id}', [CargoGeneralController::class, 'delete'])->name('delete-cargo-general');
+
+Route::get('/cargosgenerales/edit/{id}', [CargoGeneralController::class, 'getEdit'])->name('edit-cargo-general');
 
 Auth::routes();

@@ -44,7 +44,7 @@
                     <a href="{{ route('show-cargo', ['id' => $cargo->id]) }}" target="_blank"><i class="fas fa-paperclip"></i></a>
                     @endif
                 </th>
-                <td>{{ date('d/m/Y', strtotime($cargo->fecha_vecnimiento)) }}</td>
+                <td>{{ date('d/m/Y', strtotime($cargo->fecha_vencimiento )) }}</td>
                 <td>{{ $cargo->importe }}</td>
                 <td>{{ $cargo->concepto }}</td>
                 <td>{{ $cargo->estatus }}</td>

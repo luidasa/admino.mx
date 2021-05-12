@@ -30,10 +30,16 @@
         <li class="nav-item {{ Route::currentRouteName() == 'panel' ? 'active': '' }}">
           <a class="nav-link " aria-current="page" href="{{route('panel')}}">Panel</a>
         </li>
-        <li class="nav-item {{ str_contains(Route::currentRouteName(), 'condomino') ? 'active': '' }}">
-          <a class="nav-link" href="{{route('condominos')}}">
+        <li class="nav-item dropdown {{ str_contains(Route::currentRouteName(), 'condomino') ? 'active': '' }}">
+          <a class="nav-link" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Condominos
           </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('condominos') }}">Condominos</a>
+                <a class="dropdown-item" href="{{ route('last-facturas') }}">Estados de cuenta</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('cargos-generales') }}">Cargos recurrentes</a>
+              </div>
         </li>
         <li class="nav-item {{ str_contains(Route::currentRouteName(), 'proyectos') ? 'active': '' }}">
           <a class="nav-link" href="{{ route('proyectos') }}">

@@ -186,23 +186,27 @@ const data = {
   datasets: [
     {
       label: 'Egresos',
-      data: shuffle(7, 50),
-      borderColor: 1
+      data: shuffle(7, 10),
+      borderColor: "rgb(159, 206, 245, 1)",
+      backgroundColor: "rgb(159, 206, 245, .5)",
     },
     {
       label: 'Ingresos',
-      data: shuffle(7, 50),
-      borderColor: 1
+      data: shuffle(7, 10),
+      borderColor: "rgb(244, 147, 178, 1)",
+      backgroundColor: "rgb(244, 147, 178, .5)",
     },
     {
       label: 'Saldo',
-      data: shuffle(7, 50),
-      borderColor: 1,
+      data: shuffle(7, 10),
+      borderColor: "rgb(201, 159, 252, 1)",
+      backgroundColor: "rgb(201, 159, 252, .5)",
     },
     {
       label: 'Atrasos',
-      data: shuffle(7, 50),
-      borderColor: 1,
+      data: shuffle(7, 10),
+      borderColor: "rgb(255, 220, 135, 1)",
+      backgroundColor: "rgb(255, 220, 135, .5)",      
     }
   ]
 };

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCargosTable extends Migration
+class CreateCargosGeneralesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,19 @@ class CreateCargosTable extends Migration
      */
     public function up()
     {
-        Schema::create('cargos', function (Blueprint $table) {
+        Schema::create('cargos_generales', function (Blueprint $table) {         
             $table->id();
 
-            $table->foreignId('factura_id')->nullable()->constrained('facturas');
-            $table->foreignId('condomino_id')->constrained('condominos');
-            $table->foreignId('cargo_general_id')->nullable()->constrained('cargos_generales');
-            $table->decimal('importe', $precision = 8, $scale = 2);
             $table->string('concepto');
-            $table->string('estatus')->default('pendiente');
+            $table->string('descripcion');
+            $table->decimal('importe', $precision = 8, $scale = 2);
+            $table->datetime('fecha_inicio');
+            $table->integer('periodicidad')->default(1); 
+            $table->string('estatus')->default('creado'); //['creado', 'planeado', 'pagando', 'cancelado']
+            $table->integer('repeticiones');
+            $table->integer('descuento_por_desocupada')->default(0);
             $table->string('nombre_original')->nullable();
             $table->string('archivo')->nullable();
-            $table->datetime('fecha_vencimiento');
 
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
@@ -40,6 +41,6 @@ class CreateCargosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cargos');
+        Schema::dropIfExists('cargos_generales');
     }
 }
