@@ -26,14 +26,14 @@
 <div class="card">
         <div class="card-header">Registrar cargo general</div>
         <div class="card-body">
-          <form action="@isset($cargo) {{ route('edit-cargo-general', ['id' => $cargo->id]) }} @else {{ route('create-cargo-general') }} @endisset" method="post" enctype="multipart/form-data">
+          <form action="@isset($cargo->id) {{ route('edit-cargo-general', ['id' => $cargo->id]) }} @else {{ route('create-cargo-general') }} @endisset" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row">
               <div class="form-group col">
                 <label for="fecha_inicio">Fecha de Inicio</label>
                 <input type="date" class="form-control @error('fecha_inicio') is-invalid @enderror" 
                   id="fecha_inicio" name="fecha_inicio" placeholder="Fecha de Inicio" 
-                  value="@error('fecha_inicio') old->input('fecha_inicio') @enderror" required>
+                  value="{{ isset($old) ? $old->input('fecha_inicio') : date('Y-m-d', strtotime($cargo->fecha_inicio))}}" required>
                 @error('fecha_inicio')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -42,7 +42,7 @@
                 <label for="repeticiones">Repeticiones</label>
                 <input type="number" step="1" min="1" max="12" class="form-control @error('repeticiones') is-invalid @enderror" 
                   id="repeticiones" name="repeticiones" placeholder="Numero de repeticiones" 
-                  value="@error('repeticiones') old->input('repeticiones') @enderror" required>
+                  value="{{ isset($old) ? $old->input('repeticiones') : $cargo->repeticiones }}" required>
                 @error('repeticiones')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -51,9 +51,9 @@
                 <label for="periodicidad">Periodicidad</label>
                 <select class="form-control @error('periodicidad') is-invalid @enderror" id="periodicidad" name="periodicidad">
                     <option value="">-- Seleccione cada cuando se va a cobrar--</option>
-                    <option value="0">Unica</option>
-                    <option value="1">Mensual</option>
-                    <option value="2">Bimestral</option>
+                    <option value="0" {{ (isset($old) && ($old->input('repeticiones') === s0)) ? "selected" : (($cargo->repeticiones === 0) ? "selected" : '') }}>Unica</option>
+                    <option value="1" {{ (isset($old) && ($old->input('repeticiones') === 1)) ? "selected" : (($cargo->repeticiones === 1) ? "selected" : '') }}>Mensual</option>
+                    <option value="2" {{ (isset($old) && ($old->input('repeticiones') === 2)) ? "selected" : (($cargo->repeticiones === 2) ? "selected" : '') }}>Bimestral</option>
                     <option value="3">Trimestral</option>
                     <option value="6">Semestral</option>
                     <option value="12">Anual</option>
@@ -68,7 +68,8 @@
                 <label for="importe">Importe</label>
                 <input type="decimal" maxlength="14" 
                   class="form-control @error('importe') is-invalid @enderror" 
-                  id="importe" name="importe" placeholder="Importe de la cuota recurrente" required>
+                  id="importe" name="importe" placeholder="Importe de la cuota recurrente" 
+                  value="{{ isset($old) ? $old->input('importe') : $cargo->importe }}" required>
                 @error('importe')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -77,7 +78,8 @@
                 <label for="descuento_por_desocupada">Descuento por desocupada</label>
                 <input type="decimal" min="0" max="100" step="1" 
                   class="form-control @error('descuento_por_desocupada') is-invalid @enderror" 
-                  id="descuento_por_desocupada" name="descuento_por_desocupada" placeholder="Descuento si esta desocupada" required>
+                  id="descuento_por_desocupada" name="descuento_por_desocupada" placeholder="Descuento si esta desocupada" 
+                  value="{{ isset($old) ? $old->input('descuento_por_desocupada') : $cargo->descuento_por_desocupada }}" required>
                 @error('descuento_por_desocupada')
                   <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

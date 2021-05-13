@@ -21,7 +21,7 @@ class CargoGeneralController extends Controller
     }
 
     public function getCreate() {
-        return view('cargosrecurrentes.form');
+        return view('cargosrecurrentes.form', ['cargo' => new CargoGeneral()]);
     }
         
     public function postCreate(Request $request) {
@@ -66,6 +66,10 @@ class CargoGeneralController extends Controller
             return redirect()
                 ->route('cargos-generales')
                 ->with(['alert-danger' => 'No existe la definición de cargos.']);
+        } else if ($cargoGeneral->estatus !== 'planeado') {
+            redirect()
+                ->route('cargos-generales')
+                ->with(['alert-danger' => 'El estado de la planeación no permite que se elimine.']);
         }
 
         $cargoGeneral->cargos()->delete();
@@ -87,8 +91,6 @@ class CargoGeneralController extends Controller
                 ->with(['alert-danger' => 'No existe la definición de cargos.']);
         }
         $fechaCargo     = Carbon::createFromFormat('Y-m-d H:i:s', $cargoGeneral->fecha_inicio);
-
-
         $condominos     = Condomino::all();        
         foreach($condominos as $condomino) {
 
@@ -96,8 +98,12 @@ class CargoGeneralController extends Controller
             for($i = 0; $i < $cargoGeneral->repeticiones; $i++) {
                 $cargo = new Cargo();
 
-                $cargo->fecha_vencimiento   = $fechaCargo->toDateTime();
-                $cargo->importe             = $cargoGeneral->importe;
+                $cargo->fecha_vencimiento   = $fechaCargo->toDateTime();                
+                if (($condomino->esta_desocupada) && ($cargoGeneral->descuento_por_desocupada)) {
+                    $cargo->importe             = $cargoGeneral->descuento_por_desocupada;
+                } else {
+                    $cargo->importe             = $cargoGeneral->importe;
+                }
                 $cargo->concepto            = $cargoGeneral->concepto;
                 $cargo->created_by          = \Auth::user()->id; 
                 $cargo->updated_by          = \Auth::user()->id; 
@@ -107,7 +113,6 @@ class CargoGeneralController extends Controller
                 $condomino->cargos()->save($cargo);
                 $fechaCargo = $fechaCargo->addMonths($cargoGeneral->periodicidad); 
             }
-            
         }
         $cargoGeneral->estatus = 'planeado';
         $cargoGeneral->updated_by   = \Auth::user()->id; 
@@ -117,6 +122,62 @@ class CargoGeneralController extends Controller
         return redirect()
                 ->route('cargos-generales')
                 ->with(['alert-success' => 'Cuotas planificadas a todos los condominos.']);
+    }
 
+    public function getEdit($id) {
+        $cargoGeneral   = CargoGeneral::find($id);        
+        if ($cargoGeneral == null) {
+            return redirect()
+                ->route('cargos-generales')
+                ->with(['alert-danger' => 'No existe la definición de cargos.']);
+        } else if ($cargoGeneral->estatus !== 'creado') {
+            return redirect()
+                ->route('cargos-generales')
+                ->with(['alert-danger' => 'El estado del cargo no permite su modifiación.']);
+        }
+        return view('cargosrecurrentes.form', ['cargo' => $cargoGeneral]);
+    }
+
+    public function postEdit(Request $request, $id) {
+     
+        $validateData = $this->validate($request, [
+            'fecha_inicio'      => 'required|date',
+            'repeticiones'      => 'required|numeric|gt:0',
+            'periodicidad'      => 'required|string',
+            'importe'           => 'required|numeric|gt:0',
+            'repeticiones'      => 'required|numeric|gte:0|lte:12',
+            'concepto'          => 'required|string',
+            'descripcion'       => 'required|string',
+            'comprobante'       => 'mimes:jpg,bmp,png,pdf'
+        ]);
+
+        $cargoGeneral   = CargoGeneral::find($id);        
+        if ($cargoGeneral == null) {
+            return redirect()
+                ->route('cargos-generales')
+                ->with(['alert-danger' => 'No existe la definición de cargos.']);
+        } else if ($cargoGeneral->estatus !== 'creado') {
+            return redirect()
+                ->route('cargos-generales')
+                ->with(['alert-danger' => 'El estado del cargo no permite su modifiación.']);
+        }
+        $cargoGeneral->concepto     = $request->input('concepto');
+        $cargoGeneral->descripcion  = $request->input('descripcion'); 
+        $cargoGeneral->importe      = $request->input('importe');
+        $cargoGeneral->fecha_inicio = $request->input('fecha_inicio');
+        $cargoGeneral->periodicidad = $request->input('periodicidad');
+        $cargoGeneral->repeticiones = $request->input('repeticiones');
+        $cargoGeneral->descuento_por_desocupada = $request->input('descuento_por_desocupada');
+        $cargoGeneral->created_by   = \Auth::user()->id; 
+        $cargoGeneral->updated_by   = \Auth::user()->id; 
+
+        if ($request->file('comprobante')) {
+            $cargoGeneral->nombre_original = $request->file('comprobante')->getClientOriginalName();
+            $cargoGeneral->archivo = $request->file('comprobante')->store('minutas');
+        } 
+        $cargoGeneral->save();
+        return redirect()
+                ->route('cargos-generales')
+                ->with(['alert-success' => 'Cargo registrado. Recuerda generar el calendario para que se incluya en los siguientes estados de cuenta.']);
     }
 }

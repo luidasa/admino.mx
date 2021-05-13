@@ -52,15 +52,16 @@ Route::get('/documentos', [DocumentosController::class, 'getIndex'])->name('docu
 Route::get('/proyectos', [ProyectosController::class, 'getIndex'])->name('proyectos');
 
 Route::get('/cargosgenerales', [CargoGeneralController::class, 'getIndex'])->name('cargos-generales');
+
 Route::get('/cargosgenerales/create', [CargoGeneralController::class, 'getCreate'])->name('create-cargo-general');
 Route::post('/cargosgenerales/create', [CargoGeneralController::class, 'postCreate']);
+Route::get('/cargosgenerales/edit/{id}', [CargoGeneralController::class, 'getEdit'])->name('edit-cargo-general');
+Route::post('/cargosgenerales/edit/{id}', [CargoGeneralController::class, 'postEdit']);
 
 Route::get('/cargosgenerales/schedule/{id}', [CargoGeneralController::class, 'createCalendario'])->name('schedule-cargo-general');
 Route::get('/cargosgenerales/unschedule/{id}', [CargoGeneralController::class, 'deleteCalendario'])->name('unschedule-cargo-general');
 
 Route::get('/cargosgenerales/{id}', [CargoGeneralController::class, 'getShow'])->name('show-cargo-general');
 Route::get('/cargosgenerales/drop/{id}', [CargoGeneralController::class, 'delete'])->name('delete-cargo-general');
-
-Route::get('/cargosgenerales/edit/{id}', [CargoGeneralController::class, 'getEdit'])->name('edit-cargo-general');
 
 Auth::routes();

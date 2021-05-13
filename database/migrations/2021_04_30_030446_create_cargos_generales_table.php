@@ -20,6 +20,7 @@ class CreateCargosGeneralesTable extends Migration
             $table->string('descripcion');
             $table->decimal('importe', $precision = 8, $scale = 2);
             $table->datetime('fecha_inicio');
+            $table->datetime('fecha_fin')->nullable();
             $table->integer('periodicidad')->default(1); 
             $table->string('estatus')->default('creado'); //['creado', 'planeado', 'pagando', 'cancelado']
             $table->integer('repeticiones');

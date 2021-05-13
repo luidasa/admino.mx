@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Condomino;
 use App\Models\Cargo;
 
+use Carbon\Carbon;
+
 class CargoController extends Controller
 {
     public function __construct() {
@@ -16,7 +18,10 @@ class CargoController extends Controller
 
     public function getIndex($condomino_id) {
         $condomino  = Condomino::find($condomino_id);
-        $cargos     = $condomino->cargos()->orderBy('id', 'desc')->paginate(10);
+        $cargos     = $condomino->cargos()
+            ->where('estatus', 'pendiente')
+            ->where('fecha_vencimiento', '<', Carbon::now()->addMonth())
+            ->orderBy('fecha_vencimiento', 'desc')->paginate(10);
         if ($condomino !== null) {
             return view('cargos.index', [
                 'condomino' => $condomino,

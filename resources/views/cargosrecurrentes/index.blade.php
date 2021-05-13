@@ -61,7 +61,7 @@
                     @if ($cargo->estatus === 'planeado')
                     <a href="{{ route('unschedule-cargo-general', ['id' => $cargo->id]) }}"><i class="fas fa-calendar-times"></i></a>
                     @endif
-                    @if (($cargo->estatus !== 'pagando') || ($cargo->estatus !== 'cancelado')) 
+                    @if ($cargo->estatus === 'creado') 
                     <a href="{{ route('edit-cargo-general', ['id' => $cargo->id]) }}"><i class="fas fa-edit"></i></a>
                     <a href="{{ route('delete-cargo-general', ['id' => $cargo->id]) }}"><i class="fas fa-trash"></i></a>
                     @endif
