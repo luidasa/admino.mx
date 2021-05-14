@@ -16,14 +16,20 @@ class CreateFacturasTable extends Migration
         Schema::create('facturas', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('condominio_id');
+            $table->foreignId('condomino_id')->constrained('condominos');
+            $table->foreignId('factura_anterior_id')->nullable()->constrained('facturas');
 
             $table->decimal('saldo_anterior', $precision = 8, $scale = 2);
             $table->decimal('cargos', $precision = 8, $scale = 2);
             $table->decimal('abonos', $precision = 8, $scale = 2);
             $table->decimal('saldo_actual', $precision = 8, $scale = 2);
             $table->date('fecha_vencimiento');
-            
+            $table->date('fecha_corte');
+            $table->date('fecha_inicio');
+
+            $table->foreignId('created_by')->constrained('users');
+            $table->foreignId('updated_by')->constrained('users');
+
             $table->timestamps();
         });
     }

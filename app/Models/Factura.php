@@ -16,4 +16,8 @@ class Factura extends Model
     public function cargos() {
         return $this->oneToMany(Cargo::class);
     }
+
+    public function condomino() {
+        return $this->belongsTo(Condomino::class, 'condomino_id');
+    }
 }

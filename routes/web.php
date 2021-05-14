@@ -5,6 +5,7 @@ use App\Http\Controllers\CondominoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\CargoGeneralController;
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,6 @@ Route::get('/condominos', [CondominoController::class, 'getIndex'])->name('condo
 Route::get('/condominos/{id}', [CondominoController::class, 'getShow'])->name('show-condomino');
 Route::get('/condominos/edit/{id}', [CondominoController::class, 'getEdit'])->name('edit-condomino');
 Route::post('/condominos/edit/{id}', [CondominoController::class, 'postEdit']);
-
-Route::get('/facturas', [FacturasController::class, 'getIndex'])->name('last-facturas');
-Route::get('/facturas/{condomino_id}', [FacturasController::class, 'getIndex'])->name('facturas');
-Route::get('/facturas/{condomino_id}/{id}', [FacturasController::class, 'getShow'])->name('balance-condomino');
-Route::get('/facturas/generar', [FacturasController::class, 'getCreate'])->name('create-facturas');
-Route::post('/facturas/generar', [FacturasController::class, 'postCreate']);
 
 Route::get('/condominos/{condomino_id}/pagos', [PagosController::class, 'getIndex'])->name('pagos');
 Route::get('/condominos/{condomino_id}/pagar', [PagosController::class, 'getCreate'])->name('create-pago');
@@ -63,5 +58,11 @@ Route::get('/cargosgenerales/unschedule/{id}', [CargoGeneralController::class, '
 
 Route::get('/cargosgenerales/{id}', [CargoGeneralController::class, 'getShow'])->name('show-cargo-general');
 Route::get('/cargosgenerales/drop/{id}', [CargoGeneralController::class, 'delete'])->name('delete-cargo-general');
+
+Route::get('/facturas', [FacturaController::class, 'getIndex'])->name('last-facturas');
+Route::get('/facturas/condomino/{condomino_id}', [FacturaController::class, 'getFacturasCondomino'])->name('show-facturas');
+Route::get('/facturas/generar', [FacturaController::class, 'getGenerate'])->name('generate-facturas');
+Route::post('/facturas/generar', [FacturaController::class, 'postGenerate']);
+Route::get('/facturas/{id}/', [FacturaController::class, 'getShow'])->name('show-factura');
 
 Auth::routes();

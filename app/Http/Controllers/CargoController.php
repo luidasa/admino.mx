@@ -18,11 +18,11 @@ class CargoController extends Controller
 
     public function getIndex($condomino_id) {
         $condomino  = Condomino::find($condomino_id);
-        $cargos     = $condomino->cargos()
-            ->where('estatus', 'pendiente')
+        if ($condomino !== null) {
+            $cargos     = $condomino->cargos()
             ->where('fecha_vencimiento', '<', Carbon::now()->addMonth())
             ->orderBy('fecha_vencimiento', 'desc')->paginate(10);
-        if ($condomino !== null) {
+
             return view('cargos.index', [
                 'condomino' => $condomino,
                 'cargos'    => $cargos
@@ -45,7 +45,6 @@ class CargoController extends Controller
     }
 
     public function postCreate(Request $request, $condomino_id) {
-        $condomino = Condomino::find($condomino_id);
 
         $validateData = $this->validate($request, [
             'fecha_vencimiento' => 'required|date',
@@ -53,6 +52,7 @@ class CargoController extends Controller
             'concepto'          => 'required|string',
             'comprobante'       => 'mimes:jpg,bmp,png,pdf'
         ]);
+        $condomino = Condomino::find($condomino_id);
         if ($condomino !== null) {
             $cargo = new Cargo();
             $cargo->fecha_vencimiento   = $request->input('fecha_vencimiento');

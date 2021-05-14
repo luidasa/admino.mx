@@ -90,35 +90,37 @@ class CargoGeneralController extends Controller
                 ->route('cargos-generales')
                 ->with(['alert-danger' => 'No existe la definición de cargos.']);
         }
-        $fechaCargo     = Carbon::createFromFormat('Y-m-d H:i:s', $cargoGeneral->fecha_inicio);
         $condominos     = Condomino::all();        
         foreach($condominos as $condomino) {
+            $fechaCargo     = Carbon::createFromFormat('Y-m-d H:i:s', $cargoGeneral->fecha_inicio);
 
-            $cargos[] = [];
             for($i = 0; $i < $cargoGeneral->repeticiones; $i++) {
                 $cargo = new Cargo();
 
                 $cargo->fecha_vencimiento   = $fechaCargo->toDateTime();                
-                if (($condomino->esta_desocupada) && ($cargoGeneral->descuento_por_desocupada)) {
-                    $cargo->importe             = $cargoGeneral->descuento_por_desocupada;
+                if ($condomino->esta_desocupada) {
+                    $cargo->importe         = $cargo->importe * $cargoGeneral->descuento_por_desocupada / 100;
                 } else {
-                    $cargo->importe             = $cargoGeneral->importe;
+                    $cargo->importe         = $cargoGeneral->importe;
                 }
                 $cargo->concepto            = $cargoGeneral->concepto;
                 $cargo->created_by          = \Auth::user()->id; 
                 $cargo->updated_by          = \Auth::user()->id; 
                 $cargo->cargo_general_id    = $cargoGeneral->id;
-                $cargos[$i] = $cargo;
+                $cargo->condomino_id        = $condomino->id;
 
-                $condomino->cargos()->save($cargo);
+                $cargo->save();
+
                 $fechaCargo = $fechaCargo->addMonths($cargoGeneral->periodicidad); 
             }
+            echo $condomino->interior;
         }
         $cargoGeneral->estatus = 'planeado';
         $cargoGeneral->updated_by   = \Auth::user()->id; 
 
         $cargoGeneral->save();
 
+        die();
         return redirect()
                 ->route('cargos-generales')
                 ->with(['alert-success' => 'Cuotas planificadas a todos los condominos.']);
