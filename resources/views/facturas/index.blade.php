@@ -33,9 +33,9 @@
             <thead>
                 <tr>
                 <th scope="col">Casa</th>
+                <th scope="col">Fecha de inicio</th>
                 <th scope="col">Fecha de corte</th>
                 <th scope="col">Fecha de vencimiento</th>
-                <th scope="col">Fecha de generación</th>
                 <th scope="col">Saldo inicial</th>
                 <th scope="col">Saldo</th>
                 <th scope="col">Estatus</th>
@@ -52,17 +52,13 @@
                     {{ $factura->condomino->interior }}
                     @endif
                 </th>
-                <td>{{ date('d/m/Y', strtotsime($factura->fecha_corte )) }}</td>
-                <td>{{ date('d/m/Y', strtotsime($factura->fecha_vencimiento )) }}</td>
-                <td>{{ date('d/m/Y', strtotsime($factura->fecha_generacion )) }}</td>
-                <td>{{ $factura->saldo_inicial }}</td>
-                <td>{{ $factura->saldo }}</td>
+                <td>{{ date('d/m/Y', strtotime($factura->fecha_inicio )) }}</td>
+                <td>{{ date('d/m/Y', strtotime($factura->fecha_corte )) }}</td>
+                <td>{{ date('d/m/Y', strtotime($factura->fecha_vencimiento )) }}</td>
+                <td>{{ $factura->saldo_anterior }}</td>
+                <td>{{ $factura->saldo_actual }}</td>
                 <td>{{ $factura->estatus }}</td>
-                <td>
-                @if ($cargo->factura_id === null )
-                    <a href="{{ route('edit-factura', ['id' => $factura->id]) }}"><i class="fas fa-edit"></i></a>
-                @endif
-                </td>
+                <td></td>
                 </tr>
             @endforeach
             </tbody>

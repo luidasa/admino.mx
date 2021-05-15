@@ -17,11 +17,11 @@ class CondominoSeeder extends Seeder
     {
         //
         for($i = 0; $i < 51; $i++) {
-            $condominio = new Condomino();
-            $condominio->duenio = Str::random(10);
-            $condominio->telefono = Str::random(10);
-            $condominio->email = Str::random(10). '@gmail.com';
-            $condominio->interior = 'casa ' . ($i + 1);
+            $condominio                 = new Condomino();
+            $condominio->duenio         = Str::random(10);
+            $condominio->telefono       = Str::random(10);
+            $condominio->email          = Str::random(10). '@gmail.com';
+            $condominio->interior       = 'Casa ' . ($i + 1);
 
             $condominio->save();
         }

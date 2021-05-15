@@ -98,8 +98,8 @@ class CargoGeneralController extends Controller
                 $cargo = new Cargo();
 
                 $cargo->fecha_vencimiento   = $fechaCargo->toDateTime();                
-                if ($condomino->esta_desocupada) {
-                    $cargo->importe         = $cargo->importe * $cargoGeneral->descuento_por_desocupada / 100;
+                if ($condomino->desocupada) {
+                    $cargo->importe         = $cargoGeneral->importe * $cargoGeneral->descuento_por_desocupada / 100;
                 } else {
                     $cargo->importe         = $cargoGeneral->importe;
                 }
@@ -113,14 +113,11 @@ class CargoGeneralController extends Controller
 
                 $fechaCargo = $fechaCargo->addMonths($cargoGeneral->periodicidad); 
             }
-            echo $condomino->interior;
         }
         $cargoGeneral->estatus = 'planeado';
         $cargoGeneral->updated_by   = \Auth::user()->id; 
-
         $cargoGeneral->save();
 
-        die();
         return redirect()
                 ->route('cargos-generales')
                 ->with(['alert-success' => 'Cuotas planificadas a todos los condominos.']);

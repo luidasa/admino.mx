@@ -25,6 +25,16 @@ class FacturaController extends Controller
         return view('facturas.index', ['facturas' => $facturas]);
     }
 
+    public function getFacturasCondomino($condomino_id) {
+
+        $facturas = Factura::
+        where('condomino_id', $condomino_id)
+        ->orderBy('fecha_vencimiento', 'desc')
+        ->paginate(10);
+    return view('facturas.index', ['facturas' => $facturas]);
+
+    }
+
     public function getShow() {
         return 'aqui se va a mostrar la factura';
     }
@@ -46,17 +56,29 @@ class FacturaController extends Controller
             $totalCargos = 0;
             $totalPagos = 0;
             $factura = new Factura();
+            $facturaAnterior = Factura::find($condomino->ultima_factura_id);
 
             $factura->fecha_vencimiento = $request->input('fecha_vencimiento');
             $factura->fecha_inicio = $request->input('fecha_inicio');
             $factura->fecha_corte = $request->input('fecha_corte');
+            $factura->abonos = 0;
+            $factura->cargos = 0;
+            $factura->saldo_actual = 0;
+            $factura->created_by          = \Auth::user()->id; 
+            $factura->updated_by          = \Auth::user()->id; 
             $factura->condomino_id = $condomino->id;
+
+            if ($facturaAnterior !== null) {
+                $factura->saldo_anterior = $facturaAnterior->saldo_actual;
+            } else {
+                $factura->saldo_anterior = 0;
+            }
 
             $factura->save();
 
             $cargos = $condomino->cargos()
-                ->where('pagado_el', '<=', $request->input('fecha_corte'))
-                ->where('pagado_el', '>=', $request->input('fecha_inicio'))
+                ->where('fecha_vencimiento', '<=', $request->input('fecha_corte'))
+                ->where('fecha_vencimiento', '>=', $request->input('fecha_inicio'))
                 ->get();
 
             $pagos = $condomino->pagos()
@@ -65,22 +87,32 @@ class FacturaController extends Controller
                 ->get();
             
             foreach($cargos as $cargo) {
-                $totalCargos += $cargo->importe;
-                $cargo->factura_id = $fatura->id;
+                $totalCargos        += $cargo->importe;
+                $cargo->factura_id  = $factura->id;
+                $cargo->updated_by  = \Auth::user()->id; 
                 $cargo->save();
             }
 
             foreach($pagos as $pago) {
-                $totalPagos =+ $pago->importe;
-                $pago->factura_id = $fatura->id;
+                $totalPagos         =+ $pago->importe;
+                $pago->factura_id   = $factura->id;
+                $pago->updated_by   = \Auth::user()->id; 
                 $pago->save();
             }
 
-            $factura->saldo_inicial = $condomino->ultima_factura()->saldo_final;
-            $factura->pagos = $totalPagos;
+            $factura->abonos = $totalPagos;
             $factura->cargos = $totalCargos;
-            $fatura->save;
+            $factura->saldo_actual = $factura->saldo_anterior + $totalCargos - $totalPagos; 
+            $factura->save();
+
+            $condomino->ultima_factura_id   = $factura->id;
+            $condomino->updated_by          = \Auth::user()->id; 
+            $condomino->save();
         }
-        die();
+
+        return redirect()
+            ->route('last-facturas')
+            ->with(['alert-success' => 'Facturas generadas.']);
+
     }
 }

@@ -62,11 +62,8 @@
                 <a class="btn btn-link" href="{{ route('cargos', ['condomino_id'=> $condomino->id]) }}">
                     <i class="fas fa-receipt"></i>
                 </a>
-                @if ($condomino->ultima_factura !== null )
-                <a class="btn btn-link" href="{{ route('balance-condomino', 
-                    ['condominio_id'=> $condomino->id,
-                    'id' => $condomino->ultima_factura]) }}"><i class="fas fa-file-invoice-dollar"></i></a>
-                @endif
+                <a class="btn btn-link" href="{{ route('show-facturas', 
+                    ['condomino_id'=> $condomino->id]) }}"><i class="fas fa-file-invoice-dollar"></i></a>
             </td>
             </tr>
         @endforeach

@@ -9,6 +9,10 @@ class Condomino extends Model
 {
     use HasFactory;
 
+    public function ultima_factura() {
+        return $this->hasOne(Factura::class, 'ultima_factura_id', 'id');
+    }
+
     public function facturas() {
         return $this->hasMany(Factura::class);
     }

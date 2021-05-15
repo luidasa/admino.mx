@@ -16,6 +16,8 @@ class CreateCondominosTable extends Migration
         Schema::create('condominos', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('ultima_factura_id')->nullable();
+
             $table->string('duenio');
             $table->string('telefono');
             $table->string('email');
@@ -23,8 +25,10 @@ class CreateCondominosTable extends Migration
             $table->string('figura')->nullable();
             $table->string('interior');
             $table->boolean('desocupada')->default(false);
-            $table->unsignedBigInteger('ultima_factura')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users');
+            $table->foreignId('updated_by')->nullable()->constrained('users');
             $table->timestamps();
+
         });
     }
 

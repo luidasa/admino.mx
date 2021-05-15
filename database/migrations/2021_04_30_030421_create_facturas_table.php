@@ -17,7 +17,7 @@ class CreateFacturasTable extends Migration
             $table->id();
 
             $table->foreignId('condomino_id')->constrained('condominos');
-            $table->foreignId('factura_anterior_id')->nullable()->constrained('facturas');
+            $table->unsignedBigInteger('factura_anterior_id')->nullable();
 
             $table->decimal('saldo_anterior', $precision = 8, $scale = 2);
             $table->decimal('cargos', $precision = 8, $scale = 2);
@@ -31,6 +31,8 @@ class CreateFacturasTable extends Migration
             $table->foreignId('updated_by')->constrained('users');
 
             $table->timestamps();
+
+            $table->foreign('factura_anterior_id')->references('id')->on('facturas');
         });
     }
 
