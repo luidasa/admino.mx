@@ -38,27 +38,19 @@
                 <th scope="col">Fecha de vencimiento</th>
                 <th scope="col">Saldo inicial</th>
                 <th scope="col">Saldo</th>
-                <th scope="col">Estatus</th>
-                <th scope="col">Eliminar</th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($facturas as $factura)
                 <tr>
                 <th scope="row">
-                    @if ($factura->archivo)
-                    <a href="{{ route('show-cargo', ['id' => $cargo->id]) }}" target="_blank">{{ $factura->condomino->interior }}</a>
-                    @else
-                    {{ $factura->condomino->interior }}
-                    @endif
+                    <a href="{{ route('show-factura', ['id' => $factura->id]) }}" target="_blank">{{ $factura->id }}</a>
                 </th>
                 <td>{{ date('d/m/Y', strtotime($factura->fecha_inicio )) }}</td>
                 <td>{{ date('d/m/Y', strtotime($factura->fecha_corte )) }}</td>
                 <td>{{ date('d/m/Y', strtotime($factura->fecha_vencimiento )) }}</td>
                 <td>{{ $factura->saldo_anterior }}</td>
                 <td>{{ $factura->saldo_actual }}</td>
-                <td>{{ $factura->estatus }}</td>
-                <td></td>
                 </tr>
             @endforeach
             </tbody>
@@ -70,7 +62,7 @@
         </table>    
     </div>
     <div class="card-footer text-rigth">
-    <a href="{{ route('generate-facturas') }}" class="btn btn-primary">Generar</a>
+        <a href="{{ route('generate-facturas') }}" class="btn btn-primary">Generar</a>
     </div>
 </div>
 @endsection

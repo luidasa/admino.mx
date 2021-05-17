@@ -9,15 +9,15 @@ class Factura extends Model
 {
     use HasFactory;
 
-    public function pagos() {
-        return $this->oneToMany(Pago::class);
+    public function items_pagos() {
+        return $this->hasMany(Pago::class);
     }
 
-    public function cargos() {
-        return $this->oneToMany(Cargo::class);
+    public function items_cargos() {
+        return $this->hasMany(Cargo::class);
     }
 
     public function condomino() {
-        return $this->belongsTo(Condomino::class, 'condomino_id');
+        return $this->belongsTo(Condomino::class);
     }
 }

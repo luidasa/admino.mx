@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Factura;
+use App\Models\ItemFactura;
 use App\Models\Condomino;
 use App\Models\Cargo;
 
@@ -35,8 +36,18 @@ class FacturaController extends Controller
 
     }
 
-    public function getShow() {
-        return 'aqui se va a mostrar la factura';
+    public function getShow($id) {
+        $factura = Factura::find($id);
+        if ($factura !== null) {
+            return view('facturas.show', [
+                'factura'   => $factura,
+                'condomino' => $factura->condomino()
+            ]);
+        } else {
+            return redirect()
+                ->route('facturas')
+                ->with(['alert-danger' => 'El estado de cuenta que estas buscando no se encontro.']);
+        }
     }
 
     public function getGenerate() {
@@ -113,6 +124,5 @@ class FacturaController extends Controller
         return redirect()
             ->route('last-facturas')
             ->with(['alert-success' => 'Facturas generadas.']);
-
     }
 }
