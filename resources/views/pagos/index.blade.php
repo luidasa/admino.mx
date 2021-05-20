@@ -50,8 +50,10 @@
                 <td>{{ $pago->forma }}</td>
                 <td>{{ $pago->referencia }}</td>
                 <td>
-                @if ($condomino->factura_id === null )
-                    <a href="{{ route('edit-pago', ['id' => $condomino->id]) }}"><i class="fas fa-edit"></i></a>
+                @if ($pago->factura_id === null )
+                    <a href="{{ route('edit-pago', ['id' => $pago->id]) }}"><i class="fas fa-edit"></i></a>
+                @else 
+                    <a href="{{ route('show-factura', ['id' => $pago->factura_id] ) }}"> {{ date('d/m/Y', strtotime($pago->factura->fecha_corte)) }} </a>
                 @endif
                 </td>
                 </tr>

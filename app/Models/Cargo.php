@@ -21,7 +21,7 @@ class Cargo extends Model
         return $this->belongsTo(Condomino::class, 'condomino_id');
     }
 
-    public function facturas() {
+    public function factura() {
         return $this->belongsTo(Factura::class, 'factura_id');
     }
 }

@@ -35,26 +35,31 @@
             Condominos
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('condominos') }}">Condominos</a>
-                <a class="dropdown-item" href="{{ route('last-facturas') }}">Estados de cuenta</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('cargos-generales') }}">Cargos recurrentes</a>
-              </div>
+            <a class="dropdown-item" href="{{ route('condominos') }}">Condominos</a>
+            <a class="dropdown-item" href="{{ route('last-facturas') }}">Estados de cuenta</a>
+            <a class="dropdown-item" href="{{ route('cargos-generales') }}">Noticias</a>
+          </div>
         </li>
-        <li class="nav-item {{ str_contains(Route::currentRouteName(), 'proyectos') ? 'active': '' }}">
-          <a class="nav-link" href="{{ route('proyectos') }}">
-            Proyectos
+        <li class="nav-item dropdown {{ str_contains(Route::currentRouteName(), 'administracion') ? 'active': '' }}">
+          <a class="nav-link" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Condominio
           </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ route('condominos') }}">Condominio</a>
+            <a class="dropdown-item" href="{{ route('proyectos') }}">Proyectos</a>
+            <a class="dropdown-item" href="{{ route('quejas') }}">Quejas</a>
+            <a class="dropdown-item" href="{{ route('documentos') }}">Documentos</a>
+            <a class="dropdown-item" href="{{ route('reservaciones') }}">Reservaciones</a>
+          </div>
         </li>
-        <li class="nav-item {{ str_contains(Route::currentRouteName(), 'queja') ? 'active': '' }}">
-          <a class="nav-link" href="{{route('quejas')}}">
-            Quejas
+        <li class="nav-item dropdown {{ str_contains(Route::currentRouteName(), 'configuracion') ? 'active': '' }}">
+          <a class="nav-link" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Configuración
           </a>
-        </li>
-        <li class="nav-item {{ str_contains(Route::currentRouteName(), 'documento') ? 'active': '' }}">
-          <a class="nav-link" href="{{route('documentos')}}">
-            Documentos
-          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a href="{{route('configuracion')}}" class="dropdown-item">Generales</a>
+            <a class="dropdown-item" href="{{ route('cargos-generales') }}">Cargos recurrentes</a>
+          </div>
         </li>
         @endauth
         </ul>

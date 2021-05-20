@@ -5,6 +5,8 @@ use App\Http\Controllers\CondominoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\ReservacionController;
+use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\CargoGeneralController;
 /*
@@ -21,22 +23,27 @@ use App\Http\Controllers\CargoGeneralController;
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name('home');
 Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
 
+Route::prefix('condominos')->group(function () {
+    Route::get('', [CondominoController::class, 'getIndex'])->name('condominos');
+    Route::get('/{id}', [CondominoController::class, 'getShow'])->name('show-condomino');
+    Route::get('/edit/{id}', [CondominoController::class, 'getEdit'])->name('edit-condomino');
+    Route::post('/edit/{id}', [CondominoController::class, 'postEdit']);
+    
+    Route::get('/pagos/{condomino_id}', [PagosController::class, 'getIndex'])->name('pagos');
+    Route::get('/pagar/{condomino_id}', [PagosController::class, 'getCreate'])->name('create-pago');
+    Route::post('/pagar/{condomino_id}', [PagosController::class, 'postCreate']);    
 
-Route::get('/condominos', [CondominoController::class, 'getIndex'])->name('condominos');
-Route::get('/condominos/{id}', [CondominoController::class, 'getShow'])->name('show-condomino');
-Route::get('/condominos/edit/{id}', [CondominoController::class, 'getEdit'])->name('edit-condomino');
-Route::post('/condominos/edit/{id}', [CondominoController::class, 'postEdit']);
+    Route::get('/cargos/{condomino_id}', [CargoController::class, 'getIndex'])->name('cargos');
+    Route::get('/cargo/{condomino_id}', [CargoController::class, 'getCreate'])->name('create-cargo');
+    Route::post('/cargo/{condomino_id}', [CargoController::class, 'postCreate']);
+});
 
-Route::get('/condominos/{condomino_id}/pagos', [PagosController::class, 'getIndex'])->name('pagos');
-Route::get('/condominos/{condomino_id}/pagar', [PagosController::class, 'getCreate'])->name('create-pago');
-Route::post('/condominos/{condomino_id}/pagar', [PagosController::class, 'postCreate']);
-Route::get('/pago/{id}', [PagosController::class, 'getComprobante'])->name('show-pago');
-Route::get('/pago/edit/{id}', [PagosController::class, 'getEdit'])->name('edit-pago');
-Route::post('/pago/edit/{id}', [PagosController::class, 'postEdit']);
+Route::prefix('pago')->group(function () {
+    Route::get('/{id}', [PagosController::class, 'getComprobante'])->name('show-pago');
+    Route::get('/edit/{id}', [PagosController::class, 'getEdit'])->name('edit-pago');
+    Route::post('/edit/{id}', [PagosController::class, 'postEdit']);    
+});
 
-Route::get('/condominos/{condomino_id}/cargos', [CargoController::class, 'getIndex'])->name('cargos');
-Route::get('/condominos/{condomino_id}/cargo', [CargoController::class, 'getCreate'])->name('create-cargo');
-Route::post('/condominos/{condomino_id}/cargo', [CargoController::class, 'postCreate']);
 Route::get('/cargo/{id}', [CargoController::class, 'getComprobante'])->name('show-cargo');
 Route::get('/cargo/edit/{id}', [CargoController::class, 'getEdit'])->name('edit-cargo');
 Route::post('/cargo/edit/{id}', [CargoController::class, 'postEdit']);
@@ -64,5 +71,9 @@ Route::get('/facturas/condomino/{condomino_id}', [FacturaController::class, 'get
 Route::get('/facturas/generar', [FacturaController::class, 'getGenerate'])->name('generate-facturas');
 Route::post('/facturas/generar', [FacturaController::class, 'postGenerate']);
 Route::get('/facturas/{id}/', [FacturaController::class, 'getShow'])->name('show-factura');
+
+Route::get('/configuracion', [ConfiguracionController::class, 'getIndex'])->name('configuracion');
+
+Route::get('/reservaciones', [ReservacionController::class, 'getCalendar'])->name('reservaciones');
 
 Auth::routes();

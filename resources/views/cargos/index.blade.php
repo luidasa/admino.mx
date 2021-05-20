@@ -57,6 +57,8 @@
                 <td>
                 @if ($cargo->factura_id === null )
                     <a href="{{ route('edit-cargo', ['id' => $cargo->id]) }}"><i class="fas fa-edit"></i></a>
+                @else 
+                    <a href="{{ route('show-factura', ['id' => $cargo->factura_id] ) }}"> {{ date('d/m/Y', strtotime($cargo->factura->fecha_corte)) }} </a>
                 @endif
                 </td>
                 </tr>
