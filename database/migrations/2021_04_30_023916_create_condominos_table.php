@@ -16,6 +16,7 @@ class CreateCondominosTable extends Migration
         Schema::create('condominos', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('condominio_id')->constrained('condominios');
             $table->unsignedBigInteger('ultima_factura_id')->nullable();
 
             $table->string('duenio');

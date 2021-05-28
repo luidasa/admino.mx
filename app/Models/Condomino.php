@@ -24,4 +24,8 @@ class Condomino extends Model
     public function cargos() {
         return $this->hasMany(Cargo::class);
     }
+
+    public function condominio() {
+        return $this->belongsTo(Condominio::class, 'condominio_id');
+    }
 }

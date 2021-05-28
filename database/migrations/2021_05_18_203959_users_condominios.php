@@ -13,7 +13,12 @@ class UsersCondominios extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('users_condominios', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('condominio_id')->constrained('condominios');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ class UsersCondominios extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('users_condominios');
     }
 }

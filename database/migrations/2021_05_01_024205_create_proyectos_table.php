@@ -15,6 +15,8 @@ class CreateProyectosTable extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('condominio_id')->constrained('condominios');
+
             $table->timestamps();
         });
     }

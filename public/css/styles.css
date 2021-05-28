@@ -20495,3 +20495,44 @@ pre[class*=language-] {
 .token.variable {
   color: #ff6666;
 }
+
+.device-laptop {
+    position: relative;
+}
+.device-laptop .device-container {
+    display: block;
+    height: auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+.device-laptop .device-screenshot {
+    display: block;
+    position: absolute;
+    top: 6%;
+    left: 11.8%;
+    height: auto;
+    width: 76.57%;
+    z-index: 0;
+}
+.page-header {
+    position: relative;
+    padding-top: 8rem;
+}
+
+article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+
+#layoutDefault {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#layoutDefault #layoutDefault_footer {
+    min-width: 0;
+}

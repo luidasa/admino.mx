@@ -1,7 +1,23 @@
-@extends('layouts.master')
+@extends('layouts.public')
+
+@section('encabezado')
+    <header class="page-header page-header-light bg-light pt-2">
+        <div class="page-header-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-10 text-center" data-aos="fade">
+                        <h1 class="page-header-title">Inicio de sesión</h1>
+                        <p class="page-header-text">Ingresa con tu correo electrónico y la contraseña que elegiste cuando te registraste</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+@endsection
 
 @section('contenido')
-<div class="container">
+<div class="container pt-5 pb-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

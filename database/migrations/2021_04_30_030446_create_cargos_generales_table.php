@@ -16,6 +16,7 @@ class CreateCargosGeneralesTable extends Migration
         Schema::create('cargos_generales', function (Blueprint $table) {         
             $table->id();
 
+            $table->foreignId('condominio_id')->constrained('condominios');
             $table->string('concepto');
             $table->string('descripcion');
             $table->decimal('importe', $precision = 8, $scale = 2);
