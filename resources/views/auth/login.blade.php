@@ -4,10 +4,10 @@
     <header class="page-header page-header-light bg-light pt-2">
         <div class="page-header-content">
             <div class="container">
-                <div class="row">
-                    <div class="col-xl-8 col-lg-10 text-center" data-aos="fade">
-                        <h1 class="page-header-title">Inicio de sesión</h1>
-                        <p class="page-header-text">Ingresa con tu correo electrónico y la contraseña que elegiste cuando te registraste</p>
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 col-lg-10" data-aos="fade">
+                        <h1 class="page-header-title text-center">Inicio de sesión</h1>
+                        <p class="page-header-text text-center">Ingresa con tu correo electrónico y la contraseña que elegiste cuando te registraste</p>
                     </div>
                 </div>
             </div>

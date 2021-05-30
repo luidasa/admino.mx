@@ -28,9 +28,10 @@
         </div>
     </form>
     <ul class="navbar-nav align-items-center ml-auto">
+    @auth
         <li class="nav-item dropdown no-caret mr-3 d-none d-md-inline">
             <a class="nav-link dropdown-toggle" id="navbarDropdownDocs" href="javascript:void(0);" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="d-none d-md-inline font-weight-500">Documentation</div>
+                <div class="d-none d-md-inline font-weight-500">Condominio</div>
                 <i class="fas fa-chevron-right dropdown-arrow"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right py-0 mr-sm-n15 mr-lg-0 o-hidden animated--fade-in-up" aria-labelledby="navbarDropdownDocs">
@@ -59,6 +60,7 @@
                 </a>
             </div>
         </li>
+    @endauth
         <li class="nav-item dropdown no-caret mr-3 d-md-none">
             <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="searchDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="search"></i></a>
             <!-- Dropdown - Search-->
