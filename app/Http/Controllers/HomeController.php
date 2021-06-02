@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Condominio;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,8 +22,18 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index($id = null)
     {
-        return view('panel');
+        // Devuelve los datos del Condominio.
+
+        if ($id ==null) {
+            return view('panel');
+        }
+        $condominio = Condominio::find($id);
+        if ($condominio == null) {
+            return view('panel')->with('alert-info', 'Se actualizo la nueva ');
+        } else {
+            return view('panel', ['condominio' => $condominio]);
+        }
     }
 }

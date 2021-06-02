@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\CondominoController;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\ReservacionController;
@@ -21,32 +23,42 @@ use App\Http\Controllers\CargoGeneralController;
 */
 
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name('home');
-Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
+Route::get('/panel/{id?}', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
 
 Route::prefix('condominos')->group(function () {
     Route::get('', [CondominoController::class, 'getIndex'])->name('condominos');
     Route::get('/{id}', [CondominoController::class, 'getShow'])->name('show-condomino');
     Route::get('/edit/{id}', [CondominoController::class, 'getEdit'])->name('edit-condomino');
     Route::post('/edit/{id}', [CondominoController::class, 'postEdit']);
-    
+
     Route::get('/pagos/{condomino_id}', [PagosController::class, 'getIndex'])->name('pagos');
     Route::get('/pagar/{condomino_id}', [PagosController::class, 'getCreate'])->name('create-pago');
-    Route::post('/pagar/{condomino_id}', [PagosController::class, 'postCreate']);    
+    Route::post('/pagar/{condomino_id}', [PagosController::class, 'postCreate']);
 
     Route::get('/cargos/{condomino_id}', [CargoController::class, 'getIndex'])->name('cargos');
     Route::get('/cargo/{condomino_id}', [CargoController::class, 'getCreate'])->name('create-cargo');
     Route::post('/cargo/{condomino_id}', [CargoController::class, 'postCreate']);
 });
 
+Route::prefix('condominios')->group(function () {
+    Route::get('/create', [CondominioController::class, 'getCreate'])->name('create-condominio');
+    Route::post('/create', [CondominioController::class, 'postCreate']);
+    Route::get('/edit/{id}', [CondominioController::class, 'getEdit'])->name('edit-condominio');
+    Route::post('/edit/{id}', [CondominioController::class, 'postEdit']);
+});
+
 Route::prefix('pago')->group(function () {
     Route::get('/{id}', [PagosController::class, 'getComprobante'])->name('show-pago');
     Route::get('/edit/{id}', [PagosController::class, 'getEdit'])->name('edit-pago');
-    Route::post('/edit/{id}', [PagosController::class, 'postEdit']);    
+    Route::post('/edit/{id}', [PagosController::class, 'postEdit']);
 });
 
-Route::get('/cargo/{id}', [CargoController::class, 'getComprobante'])->name('show-cargo');
-Route::get('/cargo/edit/{id}', [CargoController::class, 'getEdit'])->name('edit-cargo');
-Route::post('/cargo/edit/{id}', [CargoController::class, 'postEdit']);
+Route::prefix('cargo')->group(function () {
+    Route::get('/{id}', [CargoController::class, 'getComprobante'])->name('show-cargo');
+    Route::get('/edit/{id}', [CargoController::class, 'getEdit'])->name('edit-cargo');
+    Route::post('/edit/{id}', [CargoController::class, 'postEdit']);
+
+});
 
 Route::get('/quejas', [QuejasController::class, 'getIndex'])->name('quejas');
 
@@ -75,5 +87,32 @@ Route::get('/facturas/{id}/', [FacturaController::class, 'getShow'])->name('show
 Route::get('/configuracion', [ConfiguracionController::class, 'getIndex'])->name('configuracion');
 
 Route::get('/reservaciones', [ReservacionController::class, 'getCalendar'])->name('reservaciones');
+
+Route::prefix('profile')->group(function() {
+    Route::get('', [ProfileController::class, 'getIndex'])
+        ->middleware('auth')
+        ->name('profile');
+    Route::get('/pagos', [ProfileController::class, 'getPagos'])
+        ->middleware(['auth', 'signed'])
+        ->name('account-pagos');
+    Route::get('/seguridad', [ProfileController::class, 'getSeguridad'])
+        ->middleware(['auth', 'signed'])
+        ->name('account-seguridad');
+    Route::get('/notificaciones', [ProfileController::class, 'getNotificaciones'])
+        ->middleware(['auth', 'signed'])
+        ->name('account-notificaciones');
+});
+
+Route::prefix('email')->group(function () {
+    Route::get('/verify/{id}/{hash}', [EmailVerificationController::class, 'verificationHandler'])
+        ->middleware(['auth', 'signed'])
+        ->name('verification.verify');
+    Route::get('/verify', [EmailVerificationController::class, 'verifyEmail'])
+        ->middleware('auth')
+        ->name('verification.notice');
+    Route::post('/verification-notification', [EmailVerificationController::class, 'resendEmailVerification'])
+        ->middleware(['auth', 'throttle:6,1'])
+        ->name('verification.send');
+});
 
 Auth::routes();

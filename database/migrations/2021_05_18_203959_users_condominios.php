@@ -13,7 +13,7 @@ class UsersCondominios extends Migration
      */
     public function up()
     {
-        Schema::create('users_condominios', function (Blueprint $table) {
+        Schema::create('condominios_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('condominio_id')->constrained('condominios');
@@ -28,6 +28,6 @@ class UsersCondominios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_condominios');
+        Schema::dropIfExists('condominios_users');
     }
 }

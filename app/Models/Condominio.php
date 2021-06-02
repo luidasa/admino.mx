@@ -9,6 +9,13 @@ class Condominio extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nombre',
+        'direccion',
+        'codigo_postal',
+        'estado'
+    ];
+
     public function condominos() {
         return $this->hasMany(Condomino::class);
     }

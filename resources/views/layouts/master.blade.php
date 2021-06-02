@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield( 'titulo' ) - Admino</title>
     @section('header')
-    <link href="css/styles.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" crossorigin="anonymous" />
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon.png" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.27.0/feather.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -38,24 +38,25 @@
                 <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro" target="_blank">
                     <div class="icon-stack bg-primary-soft text-primary mr-4"><i data-feather="book"></i></div>
                     <div>
-                        <div class="small text-gray-500">Documentation</div>
-                        Usage instructions and reference
+                        <div class="small text-gray-500">Finanzas y Pagos</div>
+                        Sección donde encontraras todos tus estados de cuenta y los del condominio.
                     </div>
                 </a>
                 <div class="dropdown-divider m-0"></div>
                 <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro/components" target="_blank">
                     <div class="icon-stack bg-primary-soft text-primary mr-4"><i data-feather="code"></i></div>
                     <div>
-                        <div class="small text-gray-500">Components</div>
-                        Code snippets and reference
+                        <div class="small text-gray-500">Comunicación</div>
+                        Minutas de las asamblea a llegado y los avisos que se han publicado.<br>
+                        Quejas y solicitudes que se hayan levantado
                     </div>
                 </a>
                 <div class="dropdown-divider m-0"></div>
                 <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro/changelog" target="_blank">
                     <div class="icon-stack bg-primary-soft text-primary mr-4"><i data-feather="file-text"></i></div>
                     <div>
-                        <div class="small text-gray-500">Changelog</div>
-                        Updates and changes
+                        <div class="small text-gray-500">Accesos y seguridad</div>
+                        Accesos que has autorizado y las bitacoras que se han llevado en la caseta de seguridad.
                     </div>
                 </a>
             </div>
@@ -67,7 +68,7 @@
             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--fade-in-up" aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100">
                     <div class="input-group input-group-joined input-group-solid">
-                        <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                        <input class="form-control" type="text" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2" />
                         <div class="input-group-append">
                             <div class="input-group-text"><i data-feather="search"></i></div>
                         </div>
@@ -80,7 +81,7 @@
             <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
                 <h6 class="dropdown-header dropdown-notifications-header">
                     <i class="mr-2" data-feather="bell"></i>
-                    Alerts Center
+                    Notificaciones
                 </h6>
                 <a class="dropdown-item dropdown-notifications-item" href="#!">
                     <div class="dropdown-notifications-item-icon bg-warning"><i data-feather="activity"></i></div>
@@ -118,7 +119,7 @@
             <div class="dropdown-menu dropdown-menu-right border-0 shadow animated--fade-in-up" aria-labelledby="navbarDropdownMessages">
                 <h6 class="dropdown-header dropdown-notifications-header">
                     <i class="mr-2" data-feather="mail"></i>
-                    Message Center
+                    Mensajes y chat
                 </h6>
                 <a class="dropdown-item dropdown-notifications-item" href="#!">
                     <img class="dropdown-notifications-item-img" src="https://source.unsplash.com/vTL_qy03D1I/60x60" />
@@ -143,18 +144,18 @@
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name">Valerie Luna</div>
-                        <div class="dropdown-user-details-email">vluna@aol.com</div>
+                        <div class="dropdown-user-details-name">{{ Auth::user()->name }}</div>
+                        <div class="dropdown-user-details-email">{{ Auth::user()->email }}</div>
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#!">
+                <a class="dropdown-item" href="{{ route('profile') }}">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
-                    Account
+                    Perfil
                 </a>
                 <a class="dropdown-item" href="#!">
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
-                    Logout
+                    Salir
                 </a>
             </div>
         </li>
@@ -166,312 +167,46 @@
         <nav class="sidenav shadow-right sidenav-light">
             <div class="sidenav-menu">
                 <div class="nav accordion" id="accordionSidenav">
-                    <div class="sidenav-menu-heading">Core</div>
+                    <div class="sidenav-menu-heading">Condominios</div>
                     <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseDashboards" aria-expanded="false" aria-controls="collapseDashboards">
                         <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                        Dashboards
+                        Panel de Control
                         <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseDashboards" data-parent="#accordionSidenav">
                         <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
-                            <a class="nav-link" href="index.html">
-                                Default
+                            <a class="nav-link" href="{{ route('panel') }}">
+                                Privada 110 de Villas Fontana
                                 <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
                             </a>
-                            <a class="nav-link" href="dashboard-2.html">
-                                Multipurpose
+                            <a class="nav-link" href="{{ route('panel') }}">
+                                Privada 110 de Villas Fontana
                                 <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
                             </a>
-                            <a class="nav-link" href="dashboard-3.html">
-                                Affiliate
+                            <a class="nav-link" href="{{ route('panel') }}">
+                                Privada 110 de Villas Fontana
                                 <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
+                            </a>
+                            <a class="nav-link" href="{{ route('create-condominio') }}">
+                                Agregar
                             </a>
                         </nav>
                     </div>
-                    <div class="sidenav-menu-heading">App Views</div>
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                        <div class="nav-link-icon"><i data-feather="grid"></i></div>
-                        Pages
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapsePages" data-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#pagesCollapseAccount" aria-expanded="false" aria-controls="pagesCollapseAccount">
-                                Account
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="pagesCollapseAccount" data-parent="#accordionSidenavPagesMenu">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="account-profile.html">
-                                        Profile
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="account-billing.html">
-                                        Billing
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="account-security.html">
-                                        Security
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="account-notifications.html">
-                                        Notifications
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                Authentication
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="pagesCollapseAuth" data-parent="#accordionSidenavPagesMenu">
-                                <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesAuth">
-                                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#pagesCollapseAuthBasic" aria-expanded="false" aria-controls="pagesCollapseAuthBasic">
-                                        Basic
-                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuthBasic" data-parent="#accordionSidenavPagesAuth">
-                                        <nav class="sidenav-menu-nested nav">
-                                            <a class="nav-link" href="auth-login-basic.html">Login</a>
-                                            <a class="nav-link" href="auth-register-basic.html">Register</a>
-                                            <a class="nav-link" href="auth-password-basic.html">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#pagesCollapseAuthSocial" aria-expanded="false" aria-controls="pagesCollapseAuthSocial">
-                                        Social
-                                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuthSocial" data-parent="#accordionSidenavPagesAuth">
-                                        <nav class="sidenav-menu-nested nav">
-                                            <a class="nav-link" href="auth-login-social.html">Login</a>
-                                            <a class="nav-link" href="auth-register-social.html">Register</a>
-                                            <a class="nav-link" href="auth-password-social.html">Forgot Password</a>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                Error
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="pagesCollapseError" data-parent="#accordionSidenavPagesMenu">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="error-400.html">
-                                        400 Error
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="error-401.html">
-                                        401 Error
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="error-403.html">
-                                        403 Error
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="error-404-1.html">
-                                        404 Error 1
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="error-404-2.html">
-                                        404 Error 2
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="error-500.html">
-                                        500 Error
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="error-503.html">
-                                        503 Error
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="error-504.html">
-                                        504 Error
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#pagesCollapseKnowledgeBase" aria-expanded="false" aria-controls="pagesCollapseKnowledgeBase">
-                                Knowledge Base
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="pagesCollapseKnowledgeBase" data-parent="#accordionSidenavPagesMenu">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="knowledge-base-home-1.html">
-                                        Home 1
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="knowledge-base-home-2.html">
-                                        Home 2
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="knowledge-base-category.html">
-                                        Category
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="knowledge-base-article.html">
-                                        Article
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                </nav>
-                            </div>
-                            <a class="nav-link" href="pricing.html">
-                                Pricing
-                                <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                            </a>
-                            <a class="nav-link" href="invoice.html">
-                                Invoice
-                                <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                            </a>
-                        </nav>
-                    </div>
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseFlows" aria-expanded="false" aria-controls="collapseFlows">
-                        <div class="nav-link-icon"><i data-feather="repeat"></i></div>
-                        Flows
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseFlows" data-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav">
-                            <a class="nav-link" href="multi-tenant-select.html">Multi-Tenant Registration</a>
-                            <a class="nav-link" href="wizard.html">
-                                Wizard
-                                <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                            </a>
-                        </nav>
-                    </div>
-                    <div class="sidenav-menu-heading">UI Toolkit</div>
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="nav-link-icon"><i data-feather="layout"></i></div>
-                        Layout
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseLayouts" data-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavLayout">
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseLayoutSidenavVariations" aria-expanded="false" aria-controls="collapseLayoutSidenavVariations">
-                                Sidenav Variations
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayoutSidenavVariations" data-parent="#accordionSidenavLayout">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-dark.html">Dark Sidenav</a>
-                                    <a class="nav-link" href="layout-rtl.html">RTL Layout</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseLayoutContainers" aria-expanded="false" aria-controls="collapseLayoutContainers">
-                                Container Options
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayoutContainers" data-parent="#accordionSidenavLayout">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-boxed.html">
-                                        Boxed Layout
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="layout-fluid.html">Fluid Layout</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseLayoutsPageHeaders" aria-expanded="false" aria-controls="collapseLayoutsPageHeaders">
-                                Page Headers
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayoutsPageHeaders" data-parent="#accordionSidenavLayout">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="header-simplified.html">Simplified</a>
-                                    <a class="nav-link" href="header-compact.html">
-                                        Compact
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                    <a class="nav-link" href="header-overlap.html">Content Overlap</a>
-                                    <a class="nav-link" href="header-breadcrumbs.html">Breadcrumbs</a>
-                                    <a class="nav-link" href="header-light.html">Light</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseLayoutsStarterTemplates" aria-expanded="false" aria-controls="collapseLayoutsStarterTemplates">
-                                Starter Layouts
-                                <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayoutsStarterTemplates" data-parent="#accordionSidenavLayout">
-                                <nav class="sidenav-menu-nested nav">
-                                    <a class="nav-link" href="starter-default.html">Default</a>
-                                    <a class="nav-link" href="starter-minimal.html">
-                                        Minimal
-                                        <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                                    </a>
-                                </nav>
-                            </div>
-                        </nav>
-                    </div>
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseComponents" aria-expanded="false" aria-controls="collapseComponents">
-                        <div class="nav-link-icon"><i data-feather="package"></i></div>
-                        Components
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseComponents" data-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav">
-                            <a class="nav-link" href="alerts.html">Alerts</a>
-                            <a class="nav-link" href="avatars.html">Avatars</a>
-                            <a class="nav-link" href="badges.html">Badges</a>
-                            <a class="nav-link" href="buttons.html">Buttons</a>
-                            <a class="nav-link" href="cards.html">
-                                Cards
-                                <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
-                            </a>
-                            <a class="nav-link" href="dropdowns.html">Dropdowns</a>
-                            <a class="nav-link" href="forms.html">
-                                Forms
-                                <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
-                            </a>
-                            <a class="nav-link" href="modals.html">Modals</a>
-                            <a class="nav-link" href="navigation.html">
-                                Navigation
-                                <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
-                            </a>
-                            <a class="nav-link" href="progress.html">Progress</a>
-                            <a class="nav-link" href="step.html">
-                                Step
-                                <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                            </a>
-                            <a class="nav-link" href="timeline.html">
-                                Timeline
-                                <span class="badge badge-primary-soft text-primary ml-auto">New</span>
-                            </a>
-                            <a class="nav-link" href="toasts.html">Toasts</a>
-                            <a class="nav-link" href="tooltips.html">Tooltips</a>
-                        </nav>
-                    </div>
-                    <a class="nav-link collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="false" aria-controls="collapseUtilities">
-                        <div class="nav-link-icon"><i data-feather="tool"></i></div>
-                        Utilities
-                        <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseUtilities" data-parent="#accordionSidenav">
-                        <nav class="sidenav-menu-nested nav">
-                            <a class="nav-link" href="animations.html">Animations</a>
-                            <a class="nav-link" href="background.html">Background</a>
-                            <a class="nav-link" href="borders.html">Borders</a>
-                            <a class="nav-link" href="lift.html">Lift</a>
-                            <a class="nav-link" href="shadows.html">Shadows</a>
-                            <a class="nav-link" href="typography.html">
-                                Typography
-                                <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
-                            </a>
-                        </nav>
-                    </div>
-                    <div class="sidenav-menu-heading">Addons</div>
+                    <div class="sidenav-menu-heading">Casas</div>
                     <a class="nav-link" href="charts.html">
-                        <div class="nav-link-icon"><i data-feather="bar-chart"></i></div>
-                        Charts
+                        <div class="nav-link-icon"><i data-feather="home"></i></div>
+                        San Isidro
                     </a>
                     <a class="nav-link" href="tables.html">
-                        <div class="nav-link-icon"><i data-feather="filter"></i></div>
-                        Tables
+                        <div class="nav-link-icon"><i data-feather="home"></i></div>
+                        Santa Ursula
                     </a>
                 </div>
             </div>
             <div class="sidenav-footer">
                 <div class="sidenav-footer-content">
-                    <div class="sidenav-footer-subtitle">Logged in as:</div>
-                    <div class="sidenav-footer-title">Valerie Luna</div>
+                    <div class="sidenav-footer-subtitle">Iniciaste como:</div>
+                    <div class="sidenav-footer-title">{{ Auth::user()->name }}</div>
                 </div>
             </div>
         </nav>
@@ -482,99 +217,98 @@
             <!-- Main page content-->
             <div class="container mt-5">
 
-            @section('encabezado')
-@show
+                @section('encabezado')
+                @show
 
-@section('camino')
-@show
+                @section('camino')
+                @show
 
-@section('feedback')
-  @if (session('alert-primary') !== null)
-  <div class="alert alert-primary" role="alert">
-    {{session('alert-primary')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if (session('alert-secondary') !== null)
-  <div class="alert alert-secondary" role="alert">
-    {{session('alert-secondary')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if (session('alert-success') !== null)
-  <div class="alert alert-success" role="alert">
-    {{session('alert-success')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if (session('alert-danger') !== null)
-  <div class="alert alert-danger" role="alert">
-  {{session('alert-danger')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if (session('alert-warning') !== null)
-  <div class="alert alert-warning" role="alert">
-    {{session('alert-warning')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if (session('alert-info') !== null)
-  <div class="alert alert-info" role="alert">
-    {{session('alert-info')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if (session('alert-light') !== null)
-  <div class="alert alert-light" role="alert">
-    {{session('alert-light')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-  @if (session('alert-dark'))
-  <div class="alert alert-dark" role="alert">
-    {{session('alert-dark')}}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  @endif
-@show
+                @section('feedback')
+                  @if (session('alert-primary') !== null)
+                  <div class="alert alert-primary" role="alert">
+                    {{session('alert-primary')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                  @if (session('alert-secondary') !== null)
+                  <div class="alert alert-secondary" role="alert">
+                    {{session('alert-secondary')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                  @if (session('alert-success') !== null)
+                  <div class="alert alert-success" role="alert">
+                    {{session('alert-success')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                  @if (session('alert-danger') !== null)
+                  <div class="alert alert-danger" role="alert">
+                  {{session('alert-danger')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                  @if (session('alert-warning') !== null)
+                  <div class="alert alert-warning" role="alert">
+                    {{session('alert-warning')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                  @if (session('alert-info') !== null)
+                  <div class="alert alert-info" role="alert">
+                    {{session('alert-info')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                  @if (session('alert-light') !== null)
+                  <div class="alert alert-light" role="alert">
+                    {{session('alert-light')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                  @if (session('alert-dark'))
+                  <div class="alert alert-dark" role="alert">
+                    {{session('alert-dark')}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  @endif
+                @show
 
-@section('contenido')
-@show
-</div>
+                @section('contenido')
+                @show
+            </div>
         </main>
     </div>
 
-
-@section('scripts')
+    @section('scripts')
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/chart-area-demo.js"></script>
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="assets/demo/chart-pie-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/date-range-picker-demo.js"></script>
+        <script src="/assets/demo/date-range-picker-demo.js"></script>
 
-@show
+    @show
 </body>
 </html>
