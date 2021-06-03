@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.public')
 
 @section('header')
     @parent
@@ -23,57 +23,60 @@
 @endsection
 
 @section('contenido')
-<div class="card">
-        <div class="card-header">Condominios registrados</div>
-        <div class="card-body table-responsive">
-        <table id="condominos" class="table table-striped">
-        <thead>
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Dueño</th>
-            <th scope="col">Telefono</th>
-            <th scope="col">Email</th>
-            <th scope="col">Residente</th>
-            <th scope="col">Figura</th>
-            <th scope="col">Saldo</th>
-            <th scope="col">Ocupada</th>
-            <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach ($condominos as $condomino)
-            <tr>
-            <th scope="row">
-                <a href="{{ route('show-condomino', ['id' => $condomino->id]) }}">{{ $condomino->id }}</a></th>
-            <td>{{ $condomino->duenio }}</td>
-            <td>{{ $condomino->telefono }}</td>
-            <td>{{ $condomino->email }}</td>
-            <td>{{ $condomino->residente }}</td>
-            <td>{{ $condomino->figura }}</td>
-            <td>{{ $condomino->saldo }}</td>
-            <td>{{ $condomino->desocupada ? 'Desocupada' : '' }}</td>
-            <td>
-                <a class="btn btn-link" href="{{ route('edit-condomino', ['id' => $condomino->id]) }}">
-                    <i class="fas fa-edit"></i>
-                </a>
-                <a class="btn btn-link" href="{{ route('pagos', ['condomino_id'=> $condomino->id]) }}">
-                    <i class="fas fa-comment-dollar"></i>
-                </a>
-                <a class="btn btn-link" href="{{ route('cargos', ['condomino_id'=> $condomino->id]) }}">
-                    <i class="fas fa-receipt"></i>
-                </a>
-                <a class="btn btn-link" href="{{ route('show-facturas', 
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Condominios registrados</div>
+            <div class="card-body table-responsive">
+                <table id="condominos" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Dueño</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Residente</th>
+                        <th scope="col">Figura</th>
+                        <th scope="col">Saldo</th>
+                        <th scope="col">Ocupada</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($condominos as $condomino)
+                        <tr>
+                            <th scope="row">
+                                <a href="{{ route('show-condomino', ['id' => $condomino->id]) }}">{{ $condomino->id }}</a></th>
+                            <td>{{ $condomino->duenio }}</td>
+                            <td>{{ $condomino->telefono }}</td>
+                            <td>{{ $condomino->email }}</td>
+                            <td>{{ $condomino->residente }}</td>
+                            <td>{{ $condomino->figura }}</td>
+                            <td>{{ $condomino->saldo }}</td>
+                            <td>{{ $condomino->desocupada ? 'Desocupada' : '' }}</td>
+                            <td>
+                                <a class="btn btn-link" href="{{ route('edit-condomino', ['id' => $condomino->id]) }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a class="btn btn-link" href="{{ route('pagos', ['condomino_id'=> $condomino->id]) }}">
+                                    <i class="fas fa-comment-dollar"></i>
+                                </a>
+                                <a class="btn btn-link" href="{{ route('cargos', ['condomino_id'=> $condomino->id]) }}">
+                                    <i class="fas fa-receipt"></i>
+                                </a>
+                                <a class="btn btn-link" href="{{ route('show-facturas',
                     ['condomino_id'=> $condomino->id]) }}"><i class="fas fa-file-invoice-dollar"></i></a>
-            </td>
-            </tr>
-        @endforeach
-        </tbody>
-        <tfoot>
-        <tr><td colspan="9">{{ $condominos->links() }}</td></tr>
-        </tfoot>
-        </table>    
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                    <tfoot>
+                    <tr><td colspan="9">{{ $condominos->links() }}</td></tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
-</div>
+
+    </div>
 @endsection
 
 @section('scripts')

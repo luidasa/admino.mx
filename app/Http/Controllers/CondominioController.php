@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Condominio;
 use App\Models\Condomino;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 
@@ -12,6 +13,13 @@ class CondominioController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
+    }
+
+    public function getIndex() {
+
+        return view('condominios.index', [
+            'condominios' => Auth::user()->condominios()->paginate(10)
+        ]);
     }
 
     public function getCreate() {

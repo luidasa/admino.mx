@@ -23,11 +23,9 @@ use App\Http\Controllers\CargoGeneralController;
 */
 
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name('home');
-Route::get('/panel/{id?}', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
+Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
 
 Route::prefix('condominos')->group(function () {
-    Route::get('', [CondominoController::class, 'getIndex'])->name('condominos');
-    Route::get('/{id}', [CondominoController::class, 'getShow'])->name('show-condomino');
     Route::get('/edit/{id}', [CondominoController::class, 'getEdit'])->name('edit-condomino');
     Route::post('/edit/{id}', [CondominoController::class, 'postEdit']);
 
@@ -38,6 +36,10 @@ Route::prefix('condominos')->group(function () {
     Route::get('/cargos/{condomino_id}', [CargoController::class, 'getIndex'])->name('cargos');
     Route::get('/cargo/{condomino_id}', [CargoController::class, 'getCreate'])->name('create-cargo');
     Route::post('/cargo/{condomino_id}', [CargoController::class, 'postCreate']);
+
+    Route::get('/panel', [CondominoController::class, 'getIndex'])->name('condominos');
+    Route::get('', [CondominoController::class, 'getIndex'])->name('condominos');
+    Route::get('/{id}', [CondominoController::class, 'getShow'])->name('show-condomino');
 });
 
 Route::prefix('condominios')->group(function () {
@@ -45,6 +47,7 @@ Route::prefix('condominios')->group(function () {
     Route::post('/create', [CondominioController::class, 'postCreate']);
     Route::get('/edit/{id}', [CondominioController::class, 'getEdit'])->name('edit-condominio');
     Route::post('/edit/{id}', [CondominioController::class, 'postEdit']);
+    Route::get('', [CondominioController::class, 'getIndex'])->name('condominios');
 });
 
 Route::prefix('pago')->group(function () {

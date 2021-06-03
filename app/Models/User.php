@@ -43,6 +43,6 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function condominios() {
-        return $this->belongsToMany('App\Models\Condominio');
+        return $this->belongsToMany('App\Models\Condominio', 'condominios_users', 'user_id', 'condominio_id');
     }
 }

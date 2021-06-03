@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.public')
 
 @section('titulo', 'Modificar los datos del condomino')
 

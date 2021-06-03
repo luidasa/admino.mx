@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.public')
 
 @section('header')
     @parent
@@ -7,9 +7,17 @@
 @section('titulo', 'Estados de cuenta')
 
 @section('encabezado')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Estados de cuenta por vencer</h1>
-</div>
+    <header class="page-header page-header-dark">
+        <div class="page-header-content">
+            <div class="container text-center">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="page-header-title">Estados de Cuenta</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 @endsection
 
 @section('camino')
@@ -26,6 +34,7 @@
 @endsection
 
 @section('contenido')
+    <div class="container">
 <div class="card">
     <div class="card-header">Estados de cuenta registrados</div>
     <div class="card-body table-responsive">
@@ -55,16 +64,20 @@
             @endforeach
             </tbody>
             <tfoot>
-                <th><td colspan="6" class="text-right">
-                {{ $facturas->links() }}
-                </td></th>
+                <tr>
+                    <td colspan="6" class="text-right">
+                        {{ $facturas->links() }}
+                    </td>
+                </tr>
             </tfoot>
-        </table>    
+        </table>
     </div>
     <div class="card-footer text-rigth">
         <a href="{{ route('generate-facturas') }}" class="btn btn-primary">Generar</a>
     </div>
 </div>
+    </div>
+
 @endsection
 
 @section('scripts')

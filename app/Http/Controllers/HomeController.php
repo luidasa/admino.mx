@@ -36,4 +36,8 @@ class HomeController extends Controller
             return view('panel', ['condominio' => $condominio]);
         }
     }
+
+    public function postIndex(Request $request, $id) {
+
+    }
 }
