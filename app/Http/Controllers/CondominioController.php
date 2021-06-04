@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Condominio;
 use App\Models\Condomino;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -33,15 +34,17 @@ class CondominioController extends Controller
             'direccion'     => ['required','min:10'],
             'codigo_postal' => ['required','digits:5'],
             'estado'        => ['required', 'string'],
-            'logotipo'      => ['mimes:jpeg,bmp,png,jpg,gif']
+            'logotipo'      => ['optional', 'mimes:jpeg,bmp,png,jpg,gif']
         ]);
 
-        $condominio = Condominio::created([
-            'nombre'        => $request->input('nombre'),
-            'direccion'     => $request->input('direccion'),
-            'codigo_postal' => $request->input('codigo_postal'),
-            'estado'        => $request->input('estado')
-        ]);
+        $condominio = new Condominio();
+        $condominio->nombre         = $request->input('nombre');
+        $condominio->direccion      = $request->input('direccion');
+        $condominio->codigo_postal  = $request->input('codigo_postal');
+        $condominio->estado         = $request->input('estado');
+        $condominio->save();
+
+        Auth::user()->condominios()->attach($condominio);
 
         // Ahora creamos todos los condominos,
         for($i = 0; $i < $request->input('numero_condominos'); $i++) {
@@ -54,16 +57,41 @@ class CondominioController extends Controller
             $condominio->condominos()->save($condomino);
         }
 
-        return redirect()->route('update-condominio', ['id', $condominio->id])->with('alert-success', 'Condominio creatado ahora eres el administrador del mismo');
+        session(['condominio_id' => $condominio->id]);
+        return redirect()
+            ->route('edit-condominio', ['id', $condominio->id])
+            ->with('alert-success', 'Condominio creatado ahora eres el administrador del mismo');
     }
 
     public function getEdit($id) {
 
-
+        $condominio = Condominio::find($id);
+        session(['condominio_id' => $condominio->id]);
+        return view('condominios.form', ['condominio' => $condominio]);
     }
 
     public function postEdit(Request $request, $id) {
 
+        $request->validate([
+            'nombre'        => ['required' ,'unique:condominios'],
+            'direccion'     => ['required','min:10'],
+            'codigo_postal' => ['required','digits:5'],
+            'estado'        => ['required', 'string'],
+            'logotipo'      => ['present', 'mimes:jpeg,bmp,png,jpg,gif']
+        ]);
+
+        $condominio = Condominio::find($id);
+        $condominio->nombre         = $request->input('nombre');
+        $condominio->direccion      = $request->input('direccion');
+        $condominio->codigo_postal  = $request->input('codigo_postal');
+        $condominio->estado         = $request->input('estado');
+        $condominio->save();
+
+        session(['condominio_id' => $condominio->id]);
+
+        return redirect()
+            ->route('edit-condominio', ['id', $condominio->id])
+            ->with('alert-success', 'Condominio actualizado');
 
     }
 }

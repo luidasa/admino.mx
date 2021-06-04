@@ -37,7 +37,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
                             @auth
-                                @if (session('condominio_id'))
+                                @if (Session::has('condominio_id'))
                                 <li class="nav-item {{ Route::currentRouteName() == 'panel' ? 'active': '' }}">
                                     <a class="nav-link " aria-current="page" href="{{route('panel')}}">Panel</a>
                                 </li>
@@ -46,7 +46,7 @@
                                         Condominos
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('condominos') }}">Condominos</a>
+                                        <a class="dropdown-item" href="{{ route('condominos', ['condominio_id' => session('condominio_id')]) }}">Condominos {{session('condominio_id')}}</a>
                                         <a class="dropdown-item" href="{{ route('last-facturas') }}">Estados de cuenta</a>
                                         <a class="dropdown-item" href="{{ route('cargos-generales') }}">Noticias</a>
                                     </div>

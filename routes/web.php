@@ -25,7 +25,7 @@ use App\Http\Controllers\CargoGeneralController;
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name('home');
 Route::get('/panel', [App\Http\Controllers\HomeController::class, 'index'])->name('panel');
 
-Route::prefix('condominos')->group(function () {
+Route::prefix('/{condominio_id}/condominos')->group(function () {
     Route::get('/edit/{id}', [CondominoController::class, 'getEdit'])->name('edit-condomino');
     Route::post('/edit/{id}', [CondominoController::class, 'postEdit']);
 

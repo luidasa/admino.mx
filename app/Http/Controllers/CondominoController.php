@@ -10,14 +10,14 @@ class CondominoController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
-    
+
     //
-    public function getIndex() {
-        $condominos = Condomino::paginate(10);
+    public function getIndex($condominio_id) {
+        $condominos = Condomino::where('condominio_id', $condominio_id)->paginate(10);
         return view('condominos.index', ["condominos" => $condominos]);
     }
 
-    public function getShow($id) {
+    public function getShow($condominio_id, $id) {
         $condomino = Condomino::find($id);
         if (isset($condomino)) {
             return view('condominos.show', ['condomino' => $condomino]);
@@ -26,7 +26,7 @@ class CondominoController extends Controller
         }
     }
 
-    public function getEdit($id) {
+    public function getEdit($condominio_id, $id) {
         $condomino = Condomino::find($id);
         if (isset($condomino)) {
             return view('condominos.form', ['condomino' => $condomino]);
@@ -35,7 +35,7 @@ class CondominoController extends Controller
         }
     }
 
-    public function postEdit(Request $request, $id) {
+    public function postEdit(Request $request, $condominio_id, $id) {
 
         $data = $request;
         $condomino = Condomino::find($id);
@@ -48,6 +48,7 @@ class CondominoController extends Controller
             return redirect()->route('condominos');
         } else {
             $condomino->duenio = $data->input('duenio');
+            $condomino->interior = $data->input('interior');
             $condomino->telefono = $data->input('telefono');
             $condomino->email = $data->input('email');
             $condomino->residente = $data->input('residente');
@@ -55,16 +56,18 @@ class CondominoController extends Controller
             $condomino->desocupada = $data->input('desocupada') !== null;
 
             $condomino->save();
-            return redirect()->route('edit-condomino', ['id' => $condomino->id])->with(['alert-success' => 'Registro condominal actualizado'] );
+            return redirect()
+                ->route('edit-condomino', ['condominio_id' => $condominio_id, 'id' => $condomino->id])
+                ->with(['alert-success' => 'Registro condominal actualizado'] );
         }
     }
 
-    public function getCreate() {
+    public function getCreate($condominio_id) {
 
         return view('condominos.form');
     }
 
-    public function getBalance() {
+    public function getBalance($condominio_id) {
 
         return view('condominos.balance');
     }

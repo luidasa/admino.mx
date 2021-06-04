@@ -17,7 +17,7 @@ class CreateCondominiosTable extends Migration
             $table->id();
 
             $table->string('nombre');
-            $table->string('domicilio')->nullable();
+            $table->string('direccion')->nullable();
             $table->string('codigo_postal')->nullable();
             $table->string('estado')->nullable();
             $table->string('logo')->nullable();

@@ -27,20 +27,25 @@ class PagosController extends Controller
         }
     }
 
-    public function getCreate($condomino_id) {
+    public function getCreate($condominio_id, $condomino_id) {
 
         $condomino = Condomino::find($condomino_id);
-        if ($condomino !== null) {
-            return view('pagos.form', [
-                'condomino' => $condomino
-            ]);        
+        if ($condomino == null) {
+            return redirect()->route('condominos')->with(['danger-alert' => 'El condomino no existe']);
         } else {
-            return redirect()->route('condominos')->with(['danger-alert' => 'El condominio no existe']);
+            if ($condomino->condominio->id != $condominio_id) {
+                return redirect()
+                    ->route('condominos', ['condominio_id' => $condominio_id])
+                    ->with(['danger-alert' => 'El condomino no existe en ese condominio']);
+            } else {
+                return view('pagos.form', [
+                    'condominio_id' => $condominio_id, 'condomino' => $condomino
+                ]);
+            }
         }
     }
 
-    public function postCreate(Request $request, $condomino_id) {
-        $condomino = Condomino::find($condomino_id);
+    public function postCreate(Request $request, $condominio_id, $condomino_id) {
 
         $validateData = $this->validate($request, [
             'pagado_el'     => 'required|date',
@@ -49,20 +54,21 @@ class PagosController extends Controller
             'forma'         => 'required|string',
             'comprobante'   => 'mimes:jpg,bmp,png,pdf'
         ]);
+        $condomino = Condomino::find($condomino_id);
         if ($condomino !== null) {
             $pago = new Pago();
             $pago->pagado_el = $request->input('pagado_el');
             $pago->importe = $request->input('importe');
             $pago->forma = $request->input('forma');
             $pago->referencia = $request->input('referencia');
-            $pago->created_by = \Auth::user()->id; 
-            $pago->updated_by = \Auth::user()->id; 
+            $pago->created_by = \Auth::user()->id;
+            $pago->updated_by = \Auth::user()->id;
 
             if ($request->file('comprobante')) {
                 $pago->nombre_original = $request->file('comprobante')->getClientOriginalName();
                 $pago->archivo = $request->file('comprobante')->store('comprobantes');
-            } 
-            
+            }
+
             $condomino->pagos()->save($pago);
             error_log('Grabamos el pago.');
             return redirect()
@@ -101,13 +107,13 @@ class PagosController extends Controller
             $pago->importe = $request->input('importe');
             $pago->forma = $request->input('forma');
             $pago->referencia = $request->input('referencia');
-            $pago->updated_by = \Auth::user()->id; 
+            $pago->updated_by = \Auth::user()->id;
 
             if ($request->file('comprobante')) {
                 $pago->nombre_original = $request->file('comprobante')->getClientOriginalName();
                 $pago->archivo = $request->file('comprobante')->store('comprobantes');
-            } 
-            
+            }
+
             $pago->save();
             return redirect()
                 ->route('pagos', ['condomino_id' => $pago->condomino->id])

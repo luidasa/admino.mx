@@ -32,19 +32,21 @@ class CargoController extends Controller
         }
     }
 
-    public function getCreate($condomino_id) {
- 
+    public function getCreate($condominio_id, $condomino_id) {
+
         $condomino = Condomino::find($condomino_id);
         if ($condomino !== null) {
             return view('cargos.form', [
                 'condomino' => $condomino
-            ]);        
+            ]);
         } else {
-            return redirect()->route('condominos')->with(['danger-alert' => 'El condominio no existe']);
+            return redirect()
+                ->route('condominos', ['condominio_id' => $condominio_id])
+                ->with(['danger-alert' => 'El condominio no existe']);
         }
     }
 
-    public function postCreate(Request $request, $condomino_id) {
+    public function postCreate(Request $request, $condominio_id, $condomino_id) {
 
         $validateData = $this->validate($request, [
             'fecha_vencimiento' => 'required|date',
@@ -58,14 +60,14 @@ class CargoController extends Controller
             $cargo->fecha_vencimiento   = $request->input('fecha_vencimiento');
             $cargo->importe             = $request->input('importe');
             $cargo->concepto            = $request->input('concepto');
-            $cargo->created_by          = \Auth::user()->id; 
-            $cargo->updated_by          = \Auth::user()->id; 
+            $cargo->created_by          = \Auth::user()->id;
+            $cargo->updated_by          = \Auth::user()->id;
 
             if ($request->file('comprobante')) {
                 $cargo->nombre_original = $request->file('comprobante')->getClientOriginalName();
                 $cargo->archivo = $request->file('comprobante')->store('evidencias');
-            } 
-            
+            }
+
             $condomino->cargos()->save($cargo);
             error_log('Grabamos el cargo.');
             return redirect()

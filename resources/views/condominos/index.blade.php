@@ -8,9 +8,17 @@
 @section('titulo', 'Condominos registrados')
 
 @section('encabezado')
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Condominios registrados</h1>
-</div>
+    <header class="page-header page-header-light pb-1">
+        <div class="page-header-content">
+            <div class="container text-center">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="page-header-title mb-3">Condominos registrados</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 @endsection
 
 @section('camino')
@@ -23,6 +31,7 @@
 @endsection
 
 @section('contenido')
+    <section class="bg-light pb-3 pt-3">
     <div class="container">
         <div class="card">
             <div class="card-header">Condominios registrados</div>
@@ -45,7 +54,7 @@
                     @foreach ($condominos as $condomino)
                         <tr>
                             <th scope="row">
-                                <a href="{{ route('show-condomino', ['id' => $condomino->id]) }}">{{ $condomino->id }}</a></th>
+                                <a href="{{ route('show-condomino', ['condominio_id' => $condomino->condominio_id, 'id' => $condomino->id]) }}">{{ $condomino->id }}</a></th>
                             <td>{{ $condomino->duenio }}</td>
                             <td>{{ $condomino->telefono }}</td>
                             <td>{{ $condomino->email }}</td>
@@ -54,17 +63,17 @@
                             <td>{{ $condomino->saldo }}</td>
                             <td>{{ $condomino->desocupada ? 'Desocupada' : '' }}</td>
                             <td>
-                                <a class="btn btn-link" href="{{ route('edit-condomino', ['id' => $condomino->id]) }}">
+                                <a class="btn btn-link" href="{{ route('edit-condomino', ['condominio_id' => $condomino->condominio_id, 'id' => $condomino->id]) }}">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a class="btn btn-link" href="{{ route('pagos', ['condomino_id'=> $condomino->id]) }}">
+                                <a class="btn btn-link" href="{{ route('pagos', ['condominio_id' => $condomino->condominio_id, 'condomino_id'=> $condomino->id]) }}">
                                     <i class="fas fa-comment-dollar"></i>
                                 </a>
-                                <a class="btn btn-link" href="{{ route('cargos', ['condomino_id'=> $condomino->id]) }}">
+                                <a class="btn btn-link" href="{{ route('cargos', ['condominio_id' => $condomino->condominio_id, 'condomino_id'=> $condomino->id]) }}">
                                     <i class="fas fa-receipt"></i>
                                 </a>
                                 <a class="btn btn-link" href="{{ route('show-facturas',
-                    ['condomino_id'=> $condomino->id]) }}"><i class="fas fa-file-invoice-dollar"></i></a>
+                    ['condominio_id' => $condomino->condominio_id, 'condomino_id'=> $condomino->id]) }}"><i class="fas fa-file-invoice-dollar"></i></a>
                             </td>
                         </tr>
                     @endforeach
