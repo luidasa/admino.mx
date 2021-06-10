@@ -21,8 +21,9 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('panel') }}">Inicio</a></li>
-            <li class="breadcrumb-item"><a
-                    href="{{ route('condominos', ['condominio_id' => session('condominio_id')]) }}">Condominos</a></li>
+            <li class="breadcrumb-item">
+                <a href="{{ route('condominos', ['condominio_id' => session('condominio_id')]) }}">Condominos</a>
+            </li>
             <li class="breadcrumb-item active">{{ $condomino->interior }}</li>
         </ol>
     </nav>

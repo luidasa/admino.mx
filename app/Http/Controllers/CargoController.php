@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -16,20 +17,40 @@ class CargoController extends Controller
         $this->middleware('auth');
     }
 
-    public function getIndex($condomino_id) {
+    public function getIndex($condominio_id, $condomino_id) {
         $condomino  = Condomino::find($condomino_id);
         if ($condomino !== null) {
-            $cargos     = $condomino->cargos()
-            ->where('fecha_vencimiento', '<', Carbon::now()->addMonth())
-            ->orderBy('fecha_vencimiento', 'desc')->paginate(10);
-
-            return view('cargos.index', [
-                'condomino' => $condomino,
-                'cargos'    => $cargos
-            ]);
+            if ($condomino->condominio->id != $condominio_id) {
+                return redirect()
+                    ->route('condominos', ['condominio_id' => $condominio_id])
+                    ->with(['danger-alert' => 'El condominio no existe']);
+            } else {
+                $cargos     = $condomino->cargos()
+                    ->where('fecha_vencimiento', '<', Carbon::now()->addMonth())
+                    ->orderBy('fecha_vencimiento', 'desc')
+                    ->paginate(10);
+                return view('cargos.index', [
+                    'condomino' => $condomino,
+                    'cargos'    => $cargos
+                ]);
+            }
         } else {
             return redirect()->route('condominos')->with(['danger-alert' => 'El condominio no existe']);
         }
+    }
+
+    public function getEdit($id) {
+
+        $cargo = Cargo::find($id);
+        if ($cargo === null) {
+            return redirect()->route('condominos', ['condominio_id' => session('condominio_id')])
+                ->with(['danger-alert' => "No existe ese cargo registrado"]);
+        }
+        return view('cargos.form', [
+            'condominio_id' => session('condominio_id'),
+            'condomino'     => $cargo->condomino,
+            'cargo'         => $cargo
+        ]);
     }
 
     public function getCreate($condominio_id, $condomino_id) {
@@ -71,11 +92,10 @@ class CargoController extends Controller
             $condomino->cargos()->save($cargo);
             error_log('Grabamos el cargo.');
             return redirect()
-                ->route('cargos', ['condomino_id' => $condomino_id])
+                ->route('cargos', ['condominio_id' => $condominio_id, 'condomino_id' => $condomino_id])
                 ->with(['alert-success' => 'Cargo registrado, se vera reflejado en su siguiente estado de cuenta.']);
         } else {
-            return redirect()->route('condominos')->with(['alert-danger' => 'El condominio no existe']);
-
+            return redirect()->route('condominos', ['condominio_id' => $condominio_id])->with(['alert-danger' => 'El condominio no existe']);
         }
     }
 

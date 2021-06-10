@@ -40,4 +40,8 @@ class HomeController extends Controller
     public function postIndex(Request $request, $id) {
 
     }
+
+    public function getFaqs() {
+        return view('faqs');
+    }
 }

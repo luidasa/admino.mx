@@ -20,6 +20,7 @@
     <section class="bg-light pb-3 pt-3">
 
         <div class="container pt-5 pb-5">
+            @include('shared.alert')
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">

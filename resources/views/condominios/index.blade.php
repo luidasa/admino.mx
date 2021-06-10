@@ -47,7 +47,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($condominios as $condominio)
+                        @forelse ($condominios as $condominio)
                             <tr>
                                 <td scope="row">
                                     <a href="{{ route('edit-condominio', ['id' => $condominio->id]) }}">{{ $condominio->nombre }}</a>
@@ -57,15 +57,24 @@
                                 <td>
                                     <a href="{{ route('condominos', ['condominio_id' => $condominio->id ]) }}" class="btn btn-link">{{ $condominio->condominos()->count() }}</a>
                                 </td>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="4">Aun no tienes condominios registrados</td>
+                            </tr>
+                        @endforelse
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="3">{{ $condominios->links() }}</td>
-                            <td><a href="{{ route('create-condominio') }}" class="btn btn-primary">Agregar</a></td>
+                            <td colspan="4">{{ $condominios->links() }}</td>
                         </tr>
                         </tfoot>
                     </table>
+                    <div class="clearfix">
+                        <div class="float-right">
+                            <a href="{{ route('create-condominio') }}" class="btn btn-primary">Agregar</a>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -19,4 +19,8 @@ class Condominio extends Model
     public function condominos() {
         return $this->hasMany(Condomino::class);
     }
+
+    public function colaboradores() {
+        return $this->hasMany(Colaborador::class);
+    }
 }

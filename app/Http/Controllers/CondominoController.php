@@ -12,7 +12,8 @@ class CondominoController extends Controller
     }
 
     //
-    public function getIndex($condominio_id) {
+    public function getIndex(Request $request, $condominio_id) {
+
         $condominos = Condomino::where('condominio_id', $condominio_id)->paginate(10);
         return view('condominos.index', ["condominos" => $condominos]);
     }

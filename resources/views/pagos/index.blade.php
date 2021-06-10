@@ -15,7 +15,7 @@
             <div class="container text-center">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
-                        <h1 class="page-header-title mb-3">Pagos efectuados por el condomino</h1>
+                        <h1 class="page-header-title mb-3">Pagos efectuados por {{ $condomino->interior }}</h1>
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
                                 {{ $pagos->links() }}
                             </td>
                             <td class="text-right">
-                                <a href="{{ route('create-pago', ['condominio_id', session('condominio_id'), 'condomino_id' => $condomino->id] ) }}"
+                                <a href="{{ route('create-pago', ['condominio_id' => session('condominio_id'), 'condomino_id' => $condomino->id] ) }}"
                                    class="btn btn-primary">Registrar</a>
                             </td>
                         </tr>

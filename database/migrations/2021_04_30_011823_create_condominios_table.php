@@ -21,6 +21,8 @@ class CreateCondominiosTable extends Migration
             $table->string('codigo_postal')->nullable();
             $table->string('estado')->nullable();
             $table->string('logo')->nullable();
+            $table->integer('numero_condominos')->default(1);
+            $table->string('prefijo_condominos')->default('casa ');
 
             $table->timestamps();
         });

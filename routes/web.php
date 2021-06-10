@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use \App\Http\Controllers\Auth\LoginController;
+
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CondominoController;
+use App\Http\Controllers\ColaboradoresController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\PagosController;
 use App\Http\Controllers\CargoController;
@@ -48,6 +52,7 @@ Route::prefix('condominios')->group(function () {
     Route::get('/edit/{id}', [CondominioController::class, 'getEdit'])->name('edit-condominio');
     Route::post('/edit/{id}', [CondominioController::class, 'postEdit']);
     Route::get('', [CondominioController::class, 'getIndex'])->name('condominios');
+    Route::post('/permisos/{id}', [CondominioController::class, 'postPermisos'])->name('permisos-condominio');
 });
 
 Route::prefix('pago')->group(function () {
@@ -118,4 +123,12 @@ Route::prefix('email')->group(function () {
         ->name('verification.send');
 });
 
+Route::prefix('colaborate/{condominio_id}')->group(function () {
+    Route::post('/invite', [ColaboradoresController::class, 'postInvitar'])->name('invitar-colaborador');
+    Route::get('/decline/invite', [ColaboradoresController::class, 'getDeclineInvite'])->name('declinar-invitacion');
+    Route::get('/accept/invite', [ColaboradoresController::class, 'postAcceptInvite'])->name('aceptar-invitacion');
+});
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/faqs', [HomeController::class, 'getFaqs'])->name('faqs');
 Auth::routes();
+
