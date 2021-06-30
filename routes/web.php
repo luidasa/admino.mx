@@ -124,7 +124,9 @@ Route::prefix('email')->group(function () {
 });
 
 Route::prefix('colaborate/{condominio_id}')->group(function () {
+    Route::post('/edit/{id}', [ColaboradoresController::class, 'postEdit'])->name('cambiar-colaboracion');
     Route::post('/invite', [ColaboradoresController::class, 'postInvitar'])->name('invitar-colaborador');
+    Route::get('/uninvite/{id}', [ColaboradoresController::class, 'getDesinvitar'])->name('desinvitar-colaborador');
     Route::get('/decline/invite', [ColaboradoresController::class, 'getDeclineInvite'])->name('declinar-invitacion');
     Route::get('/accept/invite', [ColaboradoresController::class, 'postAcceptInvite'])->name('aceptar-invitacion');
 });

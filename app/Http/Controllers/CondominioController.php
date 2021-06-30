@@ -80,9 +80,10 @@ class CondominioController extends Controller
 
     public function getEdit($id) {
 
-        $condominio = Condominio::find($id);
+        $condominio = Condominio::findOrFail($id);
+        $cargos     = $condominio->cargos_recurrentes()->paginate(5);
         session(['condominio_id' => $condominio->id]);
-        return view('condominios.form', ['condominio' => $condominio]);
+        return view('condominios.form', ['condominio' => $condominio, 'cargos' => $cargos]);
     }
 
     public function postEdit(Request $request, $id) {

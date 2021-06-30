@@ -24,29 +24,52 @@
                             </div>
                         </td>
                         <td>
-                            <div class="input-group">
-                                <select name="role" id="role" class="custom-select">
-                                    <option {{$colaborador->role == 'Presidente' ? 'selected': ''}} value="Presidente">Presidente</option>
-                                    <option {{$colaborador->role == 'Secretario' ? 'selected': ''}} value="Secretario">Secretario</option>
-                                    <option {{$colaborador->role == 'Tesorero' ? 'selected': ''}}  value="Tesorero">Tesorero</option>
-                                    <option {{$colaborador->role == 'Vocal' ? 'selected': ''}} value="Vocal">Vocal</option>
-                                    <option {{$colaborador->role == 'Administrador' ? 'selected': ''}} value="Administrador">Administrador</option>
-                                    <option {{$colaborador->role == 'Residente' ? 'selected': ''}} value="Residente">Residente</option>
-                                    <option {{$colaborador->role == 'Condomino' ? 'selected': ''}} value="Condomino">Condomino</option>
-                                </select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button"><i class="fas fa-save"></i>
-                                    </button>
+                            <form method="post"
+                                action="{{route('cambiar-colaboracion', ['condominio_id' => session('condominio_id'), 'id' => $colaborador->id])}}">
+                                @csrf
+                                <div class="input-group">
+                                    <select name="role" id="role" class="custom-select">
+                                        <option {{$colaborador->role == 'Presidente' ? 'selected': ''}} value="Presidente">
+                                            Presidente
+                                        </option>
+                                        <option {{$colaborador->role == 'Secretario' ? 'selected': ''}} value="Secretario">
+                                            Secretario
+                                        </option>
+                                        <option {{$colaborador->role == 'Tesorero' ? 'selected': ''}}  value="Tesorero">
+                                            Tesorero
+                                        </option>
+                                        <option {{$colaborador->role == 'Vocal' ? 'selected': ''}} value="Vocal">Vocal
+                                        </option>
+                                        <option {{$colaborador->role == 'Administrador' ? 'selected': ''}} value="Administrador">
+                                            Administrador
+                                        </option>
+                                        <option {{$colaborador->role == 'Residente' ? 'selected': ''}} value="Residente">
+                                            Residente
+                                        </option>
+                                        <option {{$colaborador->role == 'Condomino' ? 'selected': ''}} value="Condomino">
+                                            Condomino
+                                        </option>
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="submit">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </td>
 
                         <td>
-                            <a href="borrar" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                            <a href="{{ route('desinvitar-colaborador', ['condominio_id' => session('condominio_id'), 'id' => $colaborador->id]) }}"
+                               class="btn btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="5">No hay colaboradores en el condominio</td></tr>
+                    <tr>
+                        <td colspan="5">No hay colaboradores en el condominio</td>
+                    </tr>
                 @endforelse
             </table>
         </div>

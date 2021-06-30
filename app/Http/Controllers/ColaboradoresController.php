@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\InvitarColaboradorEmail;
 use App\Models\Colaborador;
+use App\Models\Condomino;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,5 +35,36 @@ class ColaboradoresController extends Controller
         return redirect()
             ->route('edit-condominio', ['id' => $condominio_id])
             ->with(['alert-success' => 'Invitación enviada.']);
+    }
+
+    public function getDesinvitar($condominio_id, $id) {
+
+        $mensaje = 'La invitación a colaborar ha sido retirada;';
+        $colaborador = Colaborador::findOrFail($id);
+        if ($colaborador->role == 'Administrador') {
+            $colaborador->delete();
+        } else {
+            $colaborador->role = 'Residente';
+            $colaborador->save();
+            $mensaje = 'La invitación a colaborar ha sido retirada. El colaborador solo se puede quedar como Residente';
+        }
+        return redirect()
+            ->route('edit-condominio', ['id' => $condominio_id])
+            ->with(['alert-success' => $mensaje]);
+
+    }
+
+    public function postEdit(Request $request, $condominio_id, $id) {
+
+        $this->validate($request, [
+            'role' => 'required|string'
+        ]);
+
+        $colaborador = Colaborador::findOrFail($id);
+        $colaborador->role = $request->input('role');
+        $colaborador->save();
+        return redirect()
+            ->route('edit-condominio', ['id' => $condominio_id])
+            ->with(['alert-success' => 'El role del colaborador ha sido modificado;']);
     }
 }

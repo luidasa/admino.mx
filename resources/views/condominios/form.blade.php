@@ -44,7 +44,11 @@
     <section class="bg-light pb-3 pt-3">
         <div class="container">
             <div class="row">
-
+                <div class="col">
+                    @include('shared.alert');
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-3 px-2 pb-2">
                     @include('shared.condominios.form-menu')
                 </div>
@@ -59,7 +63,9 @@
                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                             @include('shared.condominios.permisos-form')
                         </div>
-                        <div class="tab-pane fade" id="v-pills-cargos" role="tabpanel" aria-labelledby="v-pills-cargos-tab"> Aqui van los cargos recurrentes que deben de tenerse cada mes</div>
+                        <div class="tab-pane fade" id="v-pills-cargos" role="tabpanel" aria-labelledby="v-pills-cargos-tab">
+                            @include('shared.condominios.cargosrecurrentes');
+                        </div>
                         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab"> Aqui va el formulario para agregar las notificaciones para cada condomino</div>
                         @endisset
                     </div>

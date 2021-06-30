@@ -23,4 +23,8 @@ class Condominio extends Model
     public function colaboradores() {
         return $this->hasMany(Colaborador::class);
     }
+
+    public function cargos_recurrentes() {
+        return $this->hasMany(CargoGeneral::class);
+    }
 }
